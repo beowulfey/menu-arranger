@@ -1,25 +1,21 @@
+//package sc.fiji.menuarranger;
+
 import net.imagej.ImageJ;
 import org.scijava.command.Command;
 import org.scijava.command.InteractiveCommand;
-import org.scijava.display.DisplayService;
 import org.scijava.log.LogService;
 import org.scijava.menu.MenuService;
 import org.scijava.menu.ShadowMenu;
 import org.scijava.plugin.Parameter;
 import org.scijava.plugin.Plugin;
 import org.scijava.ui.UIService;
-
 import org.scijava.ui.swing.menu.SwingJMenuBarCreator;
 
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
-import javax.swing.event.TreeModelEvent;
-import javax.swing.event.TreeModelListener;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
-import javax.swing.tree.TreeModel;
 import java.awt.*;
-import java.awt.event.ComponentAdapter;
 
 @Plugin(type = Command.class, menuPath = "File>Arrange Menus")
 public class MenuArranger extends InteractiveCommand {
@@ -44,11 +40,31 @@ public class MenuArranger extends InteractiveCommand {
     private MenuService menuService;
     @Parameter
     private UIService uiService;
-    @Parameter
-    private DisplayService displayService;
+
     @Parameter
     private LogService logService;
 
+    private JFrame frame = null;
+    private DefaultMutableTreeNode treeRoot = new DefaultMutableTreeNode("Menu");
+    private DefaultTreeModel treeModel = new DefaultTreeModel(treeRoot);
+    final JMenuBar swingMenuBar = new JMenuBar(); // Maybe not final?
+
+    {
+        System.out.println("OUTSIDE IT ALL, TOP OF THE CLASS!");
+        System.out.println(treeModel.getChildCount(treeRoot));
+        System.out.println(treeModel.getRoot());
+    }
+
+    ////// TO DO!
+    // FIGURE OUT HOW TO ADD THE ROOTS. THE ROOT IS NOT BEING SAVED.
+    // DEFINITELY A PROBLEM WITH VARIABLES OUTSIDE OF SCOPE.
+
+
+    ///////////////////////////////////////////////////////////////////////////////////
+    // Reads through the shadow menu currently in use as the context.
+    // Creates nodes for each parent. Right now it only goes through the first layer.
+    // Applies those nodes to the Root.
+    // WORKS WELL! YES!
     private void parseMenu(final ShadowMenu root, DefaultMutableTreeNode treeParent) {
         double prevDepth = 0;
         DefaultMutableTreeNode node = null;
@@ -57,7 +73,7 @@ public class MenuArranger extends InteractiveCommand {
             //logService.info("Found new node!");
             //logService.info(child.getMenuEntry());
             //logService.info(depth);
-            if (depth == prevDepth) {
+            if (depth == prevDepth) {  // Change this here to go beyond the first layer.
                 node = new DefaultMutableTreeNode(child.getMenuEntry());
                 treeParent.add(node);
                 logService.info(node);
@@ -70,35 +86,37 @@ public class MenuArranger extends InteractiveCommand {
 
     @Override
     public void run() {
-        JFrame frame = new JFrame("Menu Arranger");
-        frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        if (frame == null) {
+            frame = new JFrame("Menu Arranger");
+            System.out.println("THIS IS INSIDE THE RUN!");
+            final ShadowMenu orig = menuService.getMenu();
 
-        // Begin Tree Building initialization
-        DefaultMutableTreeNode treeRoot = new DefaultMutableTreeNode("Menu Root");
+            // access menu from context and build the nodes that attach to root (and below).
+            parseMenu(orig, treeRoot);
+            treeModel.setRoot(treeRoot);
+            System.out.println(treeModel.getChildCount(treeRoot));
 
-        // get previous menu as compiled by the program
-        final ShadowMenu orig = menuService.getMenu();
-        parseMenu(orig, treeRoot);
-        logService.info("For original root: " + treeRoot.getRoot());
+            //THIS SECTION WILL ALLOW ME TO ADJUST THE MENU!! Right now I'm just reusing the default menu.
+            new SwingJMenuBarCreator().createMenus(orig, swingMenuBar);
+            frame.setJMenuBar(swingMenuBar);
+
+            //THIS is supposed to update the tree. ain't working.
+            //treeModel = (DefaultTreeModel) menuTree.getModel();
+            //treeModel.reload(treeRoot);
+            //treeModel.setRoot(treeRoot);
+
+            System.out.println(menuTree.getModel().getRoot());
 
 
-        //THIS SECTION WILL ALLOW ME TO ADJUST THE MENU!! Right now I'm just reusing the default menu.
-        final JMenuBar swingMenuBar = new JMenuBar();
-        new SwingJMenuBarCreator().createMenus(orig, swingMenuBar);
-        frame.setJMenuBar(swingMenuBar);
-
-        //THIS is supposed to update the tree. ain't working.
-        DefaultTreeModel treeModel = (DefaultTreeModel) menuTree.getModel();
-        logService.info(treeModel.getRoot());
-        treeModel.reload(treeRoot);
-        treeModel.setRoot(treeRoot);
-        logService.info(treeModel.getRoot());
-        logService.info(menuTree.getModel().getRoot()); //THIS IS CORRECT! Why does the GUI not update?
-        logService.info(menuTree.getModel().getChild(treeRoot, 0));
-
-        frame.setContentPane(new MenuArranger().rootPanel);
-        frame.pack();
-        frame.setVisible(true);
+            // UI SETUP AND APPEARANCE.
+            frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            frame.setContentPane(new MenuArranger().rootPanel);
+            frame.pack();
+            frame.setVisible(true);
+        } else {
+            System.out.println(frame);
+            logService.info("Frame was already made!");
+        }
 
 
     }
@@ -109,9 +127,23 @@ public class MenuArranger extends InteractiveCommand {
         ImageJ ij = new ImageJ();
         ij.launch(args);
 
+        System.out.println("THIS IS BEFORE IT RUNS");
+
         // why does this have to be false? if I make it true, the command runs twice?!
         ij.command().run(MenuArranger.class, false);
 
+
+    }
+
+
+    private void createUIComponents() {
+        System.out.println("THIS IS IN THE UI!");
+        System.out.println(treeModel.getChildCount(treeRoot));
+        menuTree = new JTree(treeModel);
+        menuTree.isExpanded(3);
+        menuTree.setEditable(true);
+        menuTree.setShowsRootHandles(true);
+        //System.out.println(menuTree.getModel().getRoot());
     }
 
     {
@@ -129,6 +161,7 @@ public class MenuArranger extends InteractiveCommand {
      * @noinspection ALL
      */
     private void $$$setupUI$$$() {
+        createUIComponents();
         rootPanel = new JPanel();
         rootPanel.setLayout(new com.intellij.uiDesigner.core.GridLayoutManager(3, 3, new Insets(0, 0, 0, 0), -1, -1));
         rootPanel.setAutoscrolls(false);
@@ -156,8 +189,9 @@ public class MenuArranger extends InteractiveCommand {
         menuRefresh.setText("Refresh");
         menuPanel.add(menuRefresh, new com.intellij.uiDesigner.core.GridConstraints(1, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 1, false));
         menuScrollPane = new JScrollPane();
-        menuPanel.add(menuScrollPane, new com.intellij.uiDesigner.core.GridConstraints(0, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_BOTH, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, null, new Dimension(150, -1), null, 2, false));
-        menuTree = new JTree();
+        menuPanel.add(menuScrollPane, new com.intellij.uiDesigner.core.GridConstraints(0, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_BOTH, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, null, new Dimension(150, -1), null, 0, false));
+        menuTree.setEditable(true);
+        menuTree.setShowsRootHandles(false);
         menuScrollPane.setViewportView(menuTree);
         adjustPanel = new JPanel();
         adjustPanel.setLayout(new com.intellij.uiDesigner.core.GridLayoutManager(2, 2, new Insets(0, 0, 0, 0), -1, -1));
@@ -189,9 +223,4 @@ public class MenuArranger extends InteractiveCommand {
     public JComponent $$$getRootComponent$$$() {
         return rootPanel;
     }
-
-    private void createUIComponents() {
-    }
-
-
 }
