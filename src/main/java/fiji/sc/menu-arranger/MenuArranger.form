@@ -78,12 +78,9 @@
             <properties/>
             <border type="none"/>
             <children>
-              <component id="a46e6" class="javax.swing.JTree" binding="menuTree">
+              <component id="d86f7" class="javax.swing.JTree" binding="menuTree">
                 <constraints/>
-                <properties>
-                  <editable value="true"/>
-                  <showsRootHandles value="true"/>
-                </properties>
+                <properties/>
               </component>
             </children>
           </scrollpane>
