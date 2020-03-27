@@ -10,6 +10,15 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$APPLICATION_HOME_DIR$/lib/forms_rt.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
     <orderEntry type="library" name="Maven: net.imagej:imagej:2.0.0-rc-71" level="project" />
     <orderEntry type="library" name="Maven: net.imagej:imagej-common:0.28.2" level="project" />
     <orderEntry type="library" name="Maven: net.imglib2:imglib2:5.6.3" level="project" />
