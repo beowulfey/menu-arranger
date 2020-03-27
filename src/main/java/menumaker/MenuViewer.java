@@ -7,11 +7,11 @@ import javax.swing.tree.DefaultTreeModel;
 import java.awt.*;
 
 public class MenuViewer {
-    public JPanel rootPanel;
+    protected JPanel rootPanel;
     protected JTree menuTree;
     protected JButton cancelButton;
     protected JButton okButton;
-    protected JButton menuRefresh;
+    protected JButton menuSelect;
     protected JButton hideButton;
     protected JButton showButton;
     protected JPanel BottomPanel;
@@ -21,6 +21,8 @@ public class MenuViewer {
     protected JScrollPane hiddenPane;
     protected JScrollPane visiblePane;
     protected JScrollPane menuScrollPane;
+    protected JTree visibleTree;
+    protected JTree hiddenTree;
 
     //Default stuff to make sure it compiles.
     private DefaultMutableTreeNode tempTreeRoot = new DefaultMutableTreeNode("FAILED");
@@ -79,13 +81,14 @@ public class MenuViewer {
         menuPanel.setLayout(new com.intellij.uiDesigner.core.GridLayoutManager(2, 1, new Insets(0, 0, 0, 0), -1, -1));
         rootPanel.add(menuPanel, new com.intellij.uiDesigner.core.GridConstraints(0, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_BOTH, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 1, false));
         menuPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createEtchedBorder(), "Current Menu", TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.ABOVE_TOP));
-        menuRefresh = new JButton();
-        menuRefresh.setHorizontalTextPosition(0);
-        menuRefresh.setText("Refresh");
-        menuPanel.add(menuRefresh, new com.intellij.uiDesigner.core.GridConstraints(1, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 1, false));
+        menuSelect = new JButton();
+        menuSelect.setHorizontalTextPosition(0);
+        menuSelect.setText("Refresh");
+        menuPanel.add(menuSelect, new com.intellij.uiDesigner.core.GridConstraints(1, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 1, false));
         menuScrollPane = new JScrollPane();
         menuPanel.add(menuScrollPane, new com.intellij.uiDesigner.core.GridConstraints(0, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_BOTH, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, null, new Dimension(225, -1), null, 2, false));
-        menuTree.setEditable(true);
+        menuTree.setEditable(false);
+        menuTree.setExpandsSelectedPaths(false);
         menuTree.setShowsRootHandles(false);
         menuScrollPane.setViewportView(menuTree);
         adjustPanel = new JPanel();

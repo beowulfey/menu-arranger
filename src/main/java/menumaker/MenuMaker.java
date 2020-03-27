@@ -43,8 +43,8 @@ public class MenuMaker extends InteractiveCommand {
     private void parseMenu(final ShadowMenu root, DefaultMutableTreeNode treeParent) {
         DefaultMutableTreeNode node = null;
         for (ShadowMenu child : root.getChildren()) {
-            final double depth = child.getMenuDepth(); // is 0 to start
-            if (depth > prevDepth) {  // yes it is the first cycle.
+            final double depth = child.getMenuDepth();
+            if (depth > prevDepth) {
                 node = new DefaultMutableTreeNode(child.getMenuEntry());
                 treeParent.add(node);
                 logService.info(node);

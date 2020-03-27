@@ -60,13 +60,14 @@
         <properties/>
         <border type="etched" title="Current Menu" title-position="1"/>
         <children>
-          <component id="89e63" class="javax.swing.JButton" binding="menuRefresh">
+          <component id="89e63" class="javax.swing.JButton" binding="menuSelect">
             <constraints>
-              <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="0" fill="0" indent="1" use-parent-layout="false"/>
+              <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="6" anchor="0" fill="0" indent="3" use-parent-layout="false"/>
             </constraints>
             <properties>
+              <actionCommand value=""/>
               <horizontalTextPosition value="0"/>
-              <text value="Refresh"/>
+              <text value="Select"/>
             </properties>
           </component>
           <scrollpane id="f9244" binding="menuScrollPane">
@@ -81,7 +82,8 @@
               <component id="a7d82" class="javax.swing.JTree" binding="menuTree" custom-create="true">
                 <constraints/>
                 <properties>
-                  <editable value="true"/>
+                  <editable value="false"/>
+                  <expandsSelectedPaths value="false"/>
                   <showsRootHandles value="false"/>
                 </properties>
               </component>
@@ -114,7 +116,12 @@
                 </constraints>
                 <properties/>
                 <border type="none" title="Visible" title-position="1"/>
-                <children/>
+                <children>
+                  <component id="48f35" class="javax.swing.JTree" binding="visibleTree">
+                    <constraints/>
+                    <properties/>
+                  </component>
+                </children>
               </scrollpane>
               <scrollpane id="1002c" binding="hiddenPane">
                 <constraints>
@@ -122,7 +129,12 @@
                 </constraints>
                 <properties/>
                 <border type="none" title="Hidden" title-position="1"/>
-                <children/>
+                <children>
+                  <component id="9e376" class="javax.swing.JTree" binding="hiddenTree">
+                    <constraints/>
+                    <properties/>
+                  </component>
+                </children>
               </scrollpane>
             </children>
           </splitpane>
