@@ -2,9 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="94ca62c7-75b6-4e58-a71c-5f2b9410407d" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/uiDesigner.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fiji-menu-plugin.iml" beforeDir="false" afterPath="$PROJECT_DIR$/fiji-menu-plugin.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/menumaker/MenuMaker.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/menumaker/MenuMaker.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/menumaker/MenuViewer.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/menumaker/MenuViewer.form" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/menumaker/MenuViewer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/menumaker/MenuViewer.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -137,7 +137,14 @@
       <option name="project" value="LOCAL" />
       <updated>1585315118755</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Everything is working well. SAVE DAT SHIT.">
+      <created>1585317115015</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1585317115015</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -145,7 +152,8 @@
     <MESSAGE value="UI works now, currently can read the menu, still can't get into the JTree." />
     <MESSAGE value="Cleaned up code a bit to remove extra warnings, etc." />
     <MESSAGE value="MAde it more object oriented and NOW IT WORKS GREAT!!" />
-    <option name="LAST_COMMIT_MESSAGE" value="MAde it more object oriented and NOW IT WORKS GREAT!!" />
+    <MESSAGE value="Everything is working well. SAVE DAT SHIT." />
+    <option name="LAST_COMMIT_MESSAGE" value="Everything is working well. SAVE DAT SHIT." />
   </component>
   <component name="WindowStateProjectService">
     <state x="555" y="215" width="800" height="684" key="#Project_Structure" timestamp="1585316754949">
@@ -200,30 +208,30 @@
       <screen x="0" y="27" width="1920" height="1053" />
     </state>
     <state x="697" y="408" width="634" height="305" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1/0.27.1920.1053@0.27.1920.1053" timestamp="1585255603761" />
-    <state x="413" y="119" width="1084" height="876" key="CommitChangelistDialog2" timestamp="1585315118640">
+    <state x="413" y="119" width="1084" height="876" key="CommitChangelistDialog2" timestamp="1585317114896">
       <screen x="0" y="27" width="1920" height="1053" />
     </state>
-    <state x="413" y="119" width="1084" height="876" key="CommitChangelistDialog2/0.27.1920.1053@0.27.1920.1053" timestamp="1585315118640" />
+    <state x="413" y="119" width="1084" height="876" key="CommitChangelistDialog2/0.27.1920.1053@0.27.1920.1053" timestamp="1585317114896" />
     <state x="743" y="311" width="884" height="512" key="FileChooserDialogImpl" timestamp="1585316672968">
       <screen x="0" y="27" width="1920" height="1053" />
     </state>
     <state x="743" y="311" width="884" height="512" key="FileChooserDialogImpl/0.27.1920.1053@0.27.1920.1053" timestamp="1585316672968" />
-    <state width="1874" height="185" key="GridCell.Tab.0.bottom" timestamp="1585317075764">
+    <state width="1874" height="185" key="GridCell.Tab.0.bottom" timestamp="1585327551311">
       <screen x="0" y="27" width="1920" height="1053" />
     </state>
-    <state width="1874" height="185" key="GridCell.Tab.0.bottom/0.27.1920.1053@0.27.1920.1053" timestamp="1585317075764" />
-    <state width="1874" height="185" key="GridCell.Tab.0.center" timestamp="1585317075763">
+    <state width="1874" height="185" key="GridCell.Tab.0.bottom/0.27.1920.1053@0.27.1920.1053" timestamp="1585327551311" />
+    <state width="1874" height="185" key="GridCell.Tab.0.center" timestamp="1585327551310">
       <screen x="0" y="27" width="1920" height="1053" />
     </state>
-    <state width="1874" height="185" key="GridCell.Tab.0.center/0.27.1920.1053@0.27.1920.1053" timestamp="1585317075763" />
-    <state width="1874" height="185" key="GridCell.Tab.0.left" timestamp="1585317075763">
+    <state width="1874" height="185" key="GridCell.Tab.0.center/0.27.1920.1053@0.27.1920.1053" timestamp="1585327551310" />
+    <state width="1874" height="185" key="GridCell.Tab.0.left" timestamp="1585327551310">
       <screen x="0" y="27" width="1920" height="1053" />
     </state>
-    <state width="1874" height="185" key="GridCell.Tab.0.left/0.27.1920.1053@0.27.1920.1053" timestamp="1585317075763" />
-    <state width="1874" height="185" key="GridCell.Tab.0.right" timestamp="1585317075764">
+    <state width="1874" height="185" key="GridCell.Tab.0.left/0.27.1920.1053@0.27.1920.1053" timestamp="1585327551310" />
+    <state width="1874" height="185" key="GridCell.Tab.0.right" timestamp="1585327551311">
       <screen x="0" y="27" width="1920" height="1053" />
     </state>
-    <state width="1874" height="185" key="GridCell.Tab.0.right/0.27.1920.1053@0.27.1920.1053" timestamp="1585317075764" />
+    <state width="1874" height="185" key="GridCell.Tab.0.right/0.27.1920.1053@0.27.1920.1053" timestamp="1585327551311" />
     <state x="623" y="271" width="664" height="571" key="GuiDesigner.FormSource.Dialog" timestamp="1585083149974">
       <screen x="0" y="27" width="1920" height="1053" />
     </state>

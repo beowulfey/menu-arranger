@@ -30,7 +30,9 @@ public class MenuMaker extends InteractiveCommand {
     protected JFrame frame = null;
     protected DefaultMutableTreeNode treeRoot = new DefaultMutableTreeNode("Menu");
     protected DefaultTreeModel treeModel = new DefaultTreeModel(treeRoot);
-    protected JMenuBar swingMenuBar = new JMenuBar(); // Maybe not final?
+    protected JMenuBar swingMenuBar = new JMenuBar();
+
+    protected int prevDepth = -1;
 
 
     ///////////////////////////////////////////////////////////////////////////////////
@@ -39,22 +41,20 @@ public class MenuMaker extends InteractiveCommand {
     // Applies those nodes to the Root.
     // WORKS WELL! YES!
     private void parseMenu(final ShadowMenu root, DefaultMutableTreeNode treeParent) {
-        double prevDepth = 0;
         DefaultMutableTreeNode node = null;
         for (ShadowMenu child : root.getChildren()) {
-            final double depth = child.getMenuDepth();
-            //logService.info("Found new node!");
-            //logService.info(child.getMenuEntry());
-            //logService.info(depth);
-            if (depth == prevDepth) {  // Change this here to go beyond the first layer.
+            final double depth = child.getMenuDepth(); // is 0 to start
+            if (depth > prevDepth) {  // yes it is the first cycle.
                 node = new DefaultMutableTreeNode(child.getMenuEntry());
                 treeParent.add(node);
                 logService.info(node);
             }
             if (child.getChildren() != null) {
+                prevDepth += 1;
                 parseMenu(child, node);
             }
         }
+        prevDepth -= 1;
     }
 
     @Override
