@@ -81,6 +81,7 @@ public class MenuMaker extends InteractiveCommand {
             // UI SETUP AND APPEARANCE.
             System.out.println("root from parent class:"+ treeModel.getRoot());
             menuViewer.setMenuTree(treeModel);
+            menuViewer.setupHiddenTree();
 
             frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             frame.setContentPane(menuViewer.rootPanel);
