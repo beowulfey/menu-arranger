@@ -2,14 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="94ca62c7-75b6-4e58-a71c-5f2b9410407d" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/menumaker/MenuViewer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/uiDesigner.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/fiji-menu-plugin.iml" beforeDir="false" afterPath="$PROJECT_DIR$/fiji-menu-plugin.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/MenuArranger.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/menumaker/MenuViewer.form" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/MenuArranger.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/menumaker/MenuMaker.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/META-INF/json/org.scijava.plugin.Plugin" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/META-INF/json/org.scijava.plugin.Plugin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/menumaker/MenuViewer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/menumaker/MenuViewer.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -51,13 +47,13 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="last_opened_file_path" value="$APPLICATION_HOME_DIR$/lib/forms_rt.jar!/" />
+    <property name="last_opened_file_path" value="$MAVEN_REPOSITORY$/asm/asm-commons/3.0/asm-commons-3.0.jar!/" />
     <property name="project.structure.last.edited" value="Modules" />
-    <property name="project.structure.proportion" value="0.0" />
+    <property name="project.structure.proportion" value="0.1199041" />
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="restartRequiresConfirmation" value="false" />
     <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
-    <property name="settings.editor.selected.configurable" value="com.intellij.jarRepository.settings.RemoteRepositoriesConfigurable" />
+    <property name="settings.editor.selected.configurable" value="project.propGUI" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
@@ -79,7 +75,8 @@
     </option>
   </component>
   <component name="RunManager" selected="Application.MenuMaker">
-    <configuration name="MenuMaker" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+    <configuration name="MenuMaker" type="Application" factoryName="Application" nameIsGenerated="true">
+      <option name="INCLUDE_PROVIDED_SCOPE" value="true" />
       <option name="MAIN_CLASS_NAME" value="menumaker.MenuMaker" />
       <module name="fiji-menu-plugin" />
       <method v="2">
@@ -103,11 +100,6 @@
       <item itemvalue="Application.MenuMaker" />
       <item itemvalue="JAR Application.Unnamed" />
     </list>
-    <recent_temporary>
-      <list>
-        <item itemvalue="Application.MenuMaker" />
-      </list>
-    </recent_temporary>
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -138,28 +130,36 @@
       <option name="project" value="LOCAL" />
       <updated>1585240426485</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="MAde it more object oriented and NOW IT WORKS GREAT!!">
+      <created>1585315118755</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1585315118755</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Trying to add a UI" />
     <MESSAGE value="UI works now, currently can read the menu, still can't get into the JTree." />
     <MESSAGE value="Cleaned up code a bit to remove extra warnings, etc." />
-    <option name="LAST_COMMIT_MESSAGE" value="Cleaned up code a bit to remove extra warnings, etc." />
+    <MESSAGE value="MAde it more object oriented and NOW IT WORKS GREAT!!" />
+    <option name="LAST_COMMIT_MESSAGE" value="MAde it more object oriented and NOW IT WORKS GREAT!!" />
   </component>
   <component name="WindowStateProjectService">
-    <state x="555" y="215" width="800" height="684" key="#Project_Structure" timestamp="1585228414405">
+    <state x="555" y="215" width="800" height="684" key="#Project_Structure" timestamp="1585316754949">
       <screen x="0" y="27" width="1920" height="1053" />
     </state>
-    <state x="555" y="215" width="800" height="684" key="#Project_Structure/0.27.1920.1053@0.27.1920.1053" timestamp="1585228414405" />
+    <state x="555" y="215" width="800" height="684" key="#Project_Structure/0.27.1920.1053@0.27.1920.1053" timestamp="1585316754949" />
     <state x="743" y="219" width="424" height="675" key="#com.intellij.codeInsight.i18n.I18nizeQuickFixDialog_Form" timestamp="1585053574706">
       <screen x="0" y="27" width="1920" height="1053" />
     </state>
     <state x="743" y="219" width="424" height="675" key="#com.intellij.codeInsight.i18n.I18nizeQuickFixDialog_Form/0.27.1920.1053@0.27.1920.1053" timestamp="1585053574706" />
-    <state x="418" y="211" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1585312582917">
+    <state x="418" y="211" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1585316104429">
       <screen x="0" y="27" width="1920" height="1053" />
     </state>
-    <state x="418" y="211" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.27.1920.1053@0.27.1920.1053" timestamp="1585312582917" />
+    <state x="418" y="211" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.27.1920.1053@0.27.1920.1053" timestamp="1585316104429" />
     <state x="567" y="253" width="775" height="607" key="#com.intellij.ide.fileTemplates.ui.ConfigureTemplatesDialog" timestamp="1584997054752">
       <screen x="0" y="27" width="1920" height="1053" />
     </state>
@@ -176,6 +176,10 @@
       <screen x="0" y="27" width="1920" height="1053" />
     </state>
     <state x="692" y="338" width="525" height="436" key="#com.intellij.ide.util.TreeClassChooserDialog/0.27.1920.1053@0.27.1920.1053" timestamp="1585311998280" />
+    <state x="793" y="311" width="324" height="497" key="#com.intellij.openapi.roots.ui.configuration.libraryEditor.LibraryEditorDialog" timestamp="1585316673940">
+      <screen x="0" y="27" width="1920" height="1053" />
+    </state>
+    <state x="793" y="311" width="324" height="497" key="#com.intellij.openapi.roots.ui.configuration.libraryEditor.LibraryEditorDialog/0.27.1920.1053@0.27.1920.1053" timestamp="1585316673940" />
     <state x="504" y="27" width="1406" height="1053" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog" timestamp="1585311905452">
       <screen x="0" y="27" width="1920" height="1053" />
     </state>
@@ -196,30 +200,30 @@
       <screen x="0" y="27" width="1920" height="1053" />
     </state>
     <state x="697" y="408" width="634" height="305" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1/0.27.1920.1053@0.27.1920.1053" timestamp="1585255603761" />
-    <state x="413" y="119" width="1084" height="876" key="CommitChangelistDialog2" timestamp="1585240426435">
+    <state x="413" y="119" width="1084" height="876" key="CommitChangelistDialog2" timestamp="1585315118640">
       <screen x="0" y="27" width="1920" height="1053" />
     </state>
-    <state x="413" y="119" width="1084" height="876" key="CommitChangelistDialog2/0.27.1920.1053@0.27.1920.1053" timestamp="1585240426435" />
-    <state x="743" y="311" width="424" height="491" key="FileChooserDialogImpl" timestamp="1585312787705">
+    <state x="413" y="119" width="1084" height="876" key="CommitChangelistDialog2/0.27.1920.1053@0.27.1920.1053" timestamp="1585315118640" />
+    <state x="743" y="311" width="884" height="512" key="FileChooserDialogImpl" timestamp="1585316672968">
       <screen x="0" y="27" width="1920" height="1053" />
     </state>
-    <state x="743" y="311" width="424" height="491" key="FileChooserDialogImpl/0.27.1920.1053@0.27.1920.1053" timestamp="1585312787705" />
-    <state width="1874" height="185" key="GridCell.Tab.0.bottom" timestamp="1585315078017">
+    <state x="743" y="311" width="884" height="512" key="FileChooserDialogImpl/0.27.1920.1053@0.27.1920.1053" timestamp="1585316672968" />
+    <state width="1874" height="185" key="GridCell.Tab.0.bottom" timestamp="1585317075764">
       <screen x="0" y="27" width="1920" height="1053" />
     </state>
-    <state width="1874" height="185" key="GridCell.Tab.0.bottom/0.27.1920.1053@0.27.1920.1053" timestamp="1585315078017" />
-    <state width="1874" height="185" key="GridCell.Tab.0.center" timestamp="1585315078017">
+    <state width="1874" height="185" key="GridCell.Tab.0.bottom/0.27.1920.1053@0.27.1920.1053" timestamp="1585317075764" />
+    <state width="1874" height="185" key="GridCell.Tab.0.center" timestamp="1585317075763">
       <screen x="0" y="27" width="1920" height="1053" />
     </state>
-    <state width="1874" height="185" key="GridCell.Tab.0.center/0.27.1920.1053@0.27.1920.1053" timestamp="1585315078017" />
-    <state width="1874" height="185" key="GridCell.Tab.0.left" timestamp="1585315078017">
+    <state width="1874" height="185" key="GridCell.Tab.0.center/0.27.1920.1053@0.27.1920.1053" timestamp="1585317075763" />
+    <state width="1874" height="185" key="GridCell.Tab.0.left" timestamp="1585317075763">
       <screen x="0" y="27" width="1920" height="1053" />
     </state>
-    <state width="1874" height="185" key="GridCell.Tab.0.left/0.27.1920.1053@0.27.1920.1053" timestamp="1585315078017" />
-    <state width="1874" height="185" key="GridCell.Tab.0.right" timestamp="1585315078017">
+    <state width="1874" height="185" key="GridCell.Tab.0.left/0.27.1920.1053@0.27.1920.1053" timestamp="1585317075763" />
+    <state width="1874" height="185" key="GridCell.Tab.0.right" timestamp="1585317075764">
       <screen x="0" y="27" width="1920" height="1053" />
     </state>
-    <state width="1874" height="185" key="GridCell.Tab.0.right/0.27.1920.1053@0.27.1920.1053" timestamp="1585315078017" />
+    <state width="1874" height="185" key="GridCell.Tab.0.right/0.27.1920.1053@0.27.1920.1053" timestamp="1585317075764" />
     <state x="623" y="271" width="664" height="571" key="GuiDesigner.FormSource.Dialog" timestamp="1585083149974">
       <screen x="0" y="27" width="1920" height="1053" />
     </state>
@@ -232,10 +236,14 @@
       <screen x="0" y="27" width="1920" height="1053" />
     </state>
     <state x="545" y="235" width="820" height="643" key="RollbackChangesDialog/0.27.1920.1053@0.27.1920.1053" timestamp="1585066882663" />
-    <state x="449" y="188" width="1022" height="737" key="SettingsEditor" timestamp="1585312794778">
+    <state x="449" y="188" width="1022" height="737" key="SettingsEditor" timestamp="1585317053602">
       <screen x="0" y="27" width="1920" height="1053" />
     </state>
-    <state x="449" y="188" width="1022" height="737" key="SettingsEditor/0.27.1920.1053@0.27.1920.1053" timestamp="1585312794778" />
+    <state x="449" y="188" width="1022" height="737" key="SettingsEditor/0.27.1920.1053@0.27.1920.1053" timestamp="1585317053602" />
+    <state x="555" y="277" width="800" height="559" key="Vcs.Push.Dialog.v2" timestamp="1585315122589">
+      <screen x="0" y="27" width="1920" height="1053" />
+    </state>
+    <state x="555" y="277" width="800" height="559" key="Vcs.Push.Dialog.v2/0.27.1920.1053@0.27.1920.1053" timestamp="1585315122589" />
     <state x="624" y="252" width="672" height="677" key="run.anything.popup" timestamp="1585081418151">
       <screen x="0" y="27" width="1920" height="1053" />
     </state>
