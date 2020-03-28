@@ -7,42 +7,35 @@ import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreePath;
 import javax.swing.tree.TreeSelectionModel;
 import java.awt.*;
-import java.awt.datatransfer.DataFlavor;
-import java.awt.datatransfer.UnsupportedFlavorException;
-import java.io.IOException;
-
-import static java.awt.datatransfer.DataFlavor.javaJVMLocalObjectMimeType;
 
 public class MenuViewer {
     protected JPanel rootPanel;
     protected JTree menuTree;
     protected JButton cancelButton;
     protected JButton okButton;
-    protected JButton hideButton;
-    protected JButton showButton;
+    protected JButton deleteButton;
     protected JPanel BottomPanel;
     protected JPanel adjustPanel;
     protected JSplitPane adjustSplitPane;
     protected JScrollPane hiddenPane;
     protected JScrollPane visiblePane;
-    protected JTree hiddenTree;
+    protected JTree customTree;
 
     private DefaultMutableTreeNode tempTreeRoot = new DefaultMutableTreeNode("FAILED");
-    private DefaultMutableTreeNode newTreeRoot = new DefaultMutableTreeNode("Menu");
+    private DefaultMutableTreeNode newTreeRoot = new DefaultMutableTreeNode("Drop Here");
     private DefaultTreeModel sysTreeModel = new DefaultTreeModel(tempTreeRoot);
     private DefaultTreeModel newTreeModel = new DefaultTreeModel(newTreeRoot);
 
-    public void setMenuTree(DefaultTreeModel menuTreeModel) {
+    public void setupUI(DefaultTreeModel menuTreeModel) {
         sysTreeModel = menuTreeModel;
         menuTree.setModel(sysTreeModel);
-        menuTree.getSelectionModel().setSelectionMode(TreeSelectionModel.CONTIGUOUS_TREE_SELECTION);
-    }
+        menuTree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
 
-    public void setupHiddenTree() {
-        hiddenTree.setModel(newTreeModel);
-        hiddenTree.getSelectionModel().setSelectionMode(TreeSelectionModel.CONTIGUOUS_TREE_SELECTION);
-        hiddenTree.setDropMode(DropMode.ON);
-        hiddenTree.setTransferHandler(new TransferHandler() {
+        customTree.setModel(newTreeModel);
+        customTree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
+        customTree.setDragEnabled(true);
+        customTree.setDropMode(DropMode.ON_OR_INSERT);
+        customTree.setTransferHandler(new TransferHandler() {
 
             public boolean canImport(TransferSupport info) {
                 // THIS STUFF HAPPENS WHILE THE MOUSE BUTTON IS STILL HELD!!
@@ -51,9 +44,25 @@ public class MenuViewer {
                 TreePath item = menuTree.getSelectionPath();
                 JTree.DropLocation dl = (JTree.DropLocation) info.getDropLocation();
 
+
+
+                // Make sure it's moving a proper node! DOESN'T DO YET.
+                //if (!info.isDataFlavorSupported(DataFlavor.stringFlavor)) {
+                //    return false;
+                //}
+
                 // DEBUG
-                System.out.println(item);
-                System.out.println("Drop location is " + dl.getPath());
+                //System.out.println(item);
+                //System.out.println("Drop location is " + dl.getPath());
+
+                // Use this little patch of code to prevent dropping in certain areas (here it is "names" from
+                // the demo). Does this based on row number of the tree.
+                // namesPath = tree.getPathForRow(2); --> this goes above obviously
+                // // we don't support invalid paths or descendants of the names folder
+                // if (path == null || namesPath.isDescendant(path)) {
+                //    return false;
+                //      }
+                //
 
                 return true;
             }
@@ -61,19 +70,21 @@ public class MenuViewer {
             public boolean importData(TransferSupport info) {
                 // TO DO: Set it to do something if drop location is null!?
 
+                // if we can't handle the import, say so
+                if (!canImport(info)) {
+                    return false;
+                }
+
                 JTree.DropLocation dl = (JTree.DropLocation) info.getDropLocation();
                 TreePath path = dl.getPath();
                 TreePath item = menuTree.getSelectionPath();
 
-                System.out.println("You chose to drop it at " + path);
-
                 int childIndex = dl.getChildIndex();
-                System.out.println("The index here is " + childIndex);
 
                 // if child index is -1, the drop was on top of the path, so we'll
                 // treat it as inserting at the end of that path's list of children
                 if (childIndex == -1) {
-                    childIndex = hiddenTree.getModel().getChildCount(path.getLastPathComponent());
+                    childIndex = customTree.getModel().getChildCount(path.getLastPathComponent());
                 }
 
                 // create a new node to represent the data and insert it into the model
@@ -83,8 +94,8 @@ public class MenuViewer {
                 newTreeModel.insertNodeInto(newNode, parentNode, childIndex);
 
                 // make the new node visible and scroll so that it's visible
-                hiddenTree.makeVisible(path.pathByAddingChild(newNode));
-                hiddenTree.scrollRectToVisible(hiddenTree.getPathBounds(path.pathByAddingChild(newNode)));
+                customTree.makeVisible(path.pathByAddingChild(newNode));
+                customTree.scrollRectToVisible(customTree.getPathBounds(path.pathByAddingChild(newNode)));
 
                 return true;
             }
@@ -151,20 +162,17 @@ public class MenuViewer {
         hiddenPane = new JScrollPane();
         adjustSplitPane.setRightComponent(hiddenPane);
         hiddenPane.setBorder(BorderFactory.createTitledBorder(null, "Custom Menu", TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.ABOVE_TOP));
-        hiddenTree = new JTree();
-        hiddenTree.setDragEnabled(true);
-        hiddenTree.setDropMode(DropMode.ON_OR_INSERT);
-        hiddenTree.setEditable(true);
-        hiddenTree.setScrollsOnExpand(false);
-        hiddenTree.setToggleClickCount(2);
-        hiddenTree.setVerifyInputWhenFocusTarget(false);
-        hiddenPane.setViewportView(hiddenTree);
-        hideButton = new JButton();
-        hideButton.setText("Make hidden");
-        adjustPanel.add(hideButton, new com.intellij.uiDesigner.core.GridConstraints(1, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 1, false));
-        showButton = new JButton();
-        showButton.setText("Make visible");
-        adjustPanel.add(showButton, new com.intellij.uiDesigner.core.GridConstraints(1, 1, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_EAST, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 3, false));
+        customTree = new JTree();
+        customTree.setDragEnabled(true);
+        customTree.setDropMode(DropMode.ON_OR_INSERT);
+        customTree.setEditable(true);
+        customTree.setScrollsOnExpand(false);
+        customTree.setToggleClickCount(2);
+        customTree.setVerifyInputWhenFocusTarget(false);
+        hiddenPane.setViewportView(customTree);
+        deleteButton = new JButton();
+        deleteButton.setText("Remove Selected");
+        adjustPanel.add(deleteButton, new com.intellij.uiDesigner.core.GridConstraints(1, 1, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_EAST, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 4, false));
         final com.intellij.uiDesigner.core.Spacer spacer2 = new com.intellij.uiDesigner.core.Spacer();
         rootPanel.add(spacer2, new com.intellij.uiDesigner.core.GridConstraints(2, 1, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_VERTICAL, 1, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(-1, 10), null, 2, false));
         final com.intellij.uiDesigner.core.Spacer spacer3 = new com.intellij.uiDesigner.core.Spacer();

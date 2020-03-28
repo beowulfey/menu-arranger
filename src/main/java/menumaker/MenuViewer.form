@@ -97,7 +97,7 @@
                 <properties/>
                 <border type="none" title="Custom Menu" title-position="1"/>
                 <children>
-                  <component id="9e376" class="javax.swing.JTree" binding="hiddenTree">
+                  <component id="9e376" class="javax.swing.JTree" binding="customTree">
                     <constraints/>
                     <properties>
                       <dragEnabled value="true"/>
@@ -112,20 +112,12 @@
               </scrollpane>
             </children>
           </splitpane>
-          <component id="a6a13" class="javax.swing.JButton" binding="hideButton">
+          <component id="3d210" class="javax.swing.JButton" binding="deleteButton">
             <constraints>
-              <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="8" fill="0" indent="1" use-parent-layout="false"/>
+              <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="4" use-parent-layout="false"/>
             </constraints>
             <properties>
-              <text value="Make hidden"/>
-            </properties>
-          </component>
-          <component id="3d210" class="javax.swing.JButton" binding="showButton">
-            <constraints>
-              <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="0" hsize-policy="0" anchor="4" fill="0" indent="3" use-parent-layout="false"/>
-            </constraints>
-            <properties>
-              <text value="Make visible"/>
+              <text value="Remove Selected"/>
             </properties>
           </component>
         </children>

@@ -2,23 +2,21 @@ package menumaker;
 
 import net.imagej.ImageJ;
 import org.scijava.command.Command;
-import org.scijava.command.InteractiveCommand;
 import org.scijava.log.LogService;
 import org.scijava.menu.MenuService;
 import org.scijava.menu.ShadowMenu;
 import org.scijava.plugin.Parameter;
 import org.scijava.plugin.Plugin;
 import org.scijava.ui.UIService;
-import org.scijava.ui.swing.menu.SwingJMenuBarCreator;
 
 import javax.swing.*;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 @Plugin(type = Command.class, menuPath = "File>Arrange Menus")
-public class MenuMaker extends InteractiveCommand {
-
-
+public class MenuMaker implements Command {
 
     @Parameter
     private MenuService menuService;
@@ -27,19 +25,20 @@ public class MenuMaker extends InteractiveCommand {
     @Parameter
     private LogService logService;
 
-    protected JFrame frame = null;
-    protected DefaultMutableTreeNode treeRoot = new DefaultMutableTreeNode("Menu");
-    protected DefaultTreeModel treeModel = new DefaultTreeModel(treeRoot);
-    protected JMenuBar swingMenuBar = new JMenuBar();
+    private JFrame frame = null;
+    private DefaultMutableTreeNode treeRoot = new DefaultMutableTreeNode("Menu");
+    private DefaultTreeModel treeModel = new DefaultTreeModel(treeRoot);
+    // private JMenuBar swingMenuBar = new JMenuBar();
 
-    protected int prevDepth = -1;
+    private int prevDepth = -1;
+    private boolean init = false;
 
 
     ///////////////////////////////////////////////////////////////////////////////////
-    // Reads through the shadow menu currently in use as the context.
-    // Creates nodes for each parent. Right now it only goes through the first layer.
-    // Applies those nodes to the Root.
-    // WORKS WELL! YES!
+    // Reads through the shadow menu currently in use within the context.
+    // Creates a node for each parent. Applies those nodes to the local root.
+    // Does this at each layer.
+    // Appears to be working properly, which caught me off guard.
     private void parseMenu(final ShadowMenu root, DefaultMutableTreeNode treeParent) {
         DefaultMutableTreeNode node = null;
         for (ShadowMenu child : root.getChildren()) {
@@ -47,7 +46,6 @@ public class MenuMaker extends InteractiveCommand {
             if (depth > prevDepth) {
                 node = new DefaultMutableTreeNode(child.getMenuEntry());
                 treeParent.add(node);
-                logService.info(node);
             }
             if (child.getChildren() != null) {
                 prevDepth += 1;
@@ -59,34 +57,40 @@ public class MenuMaker extends InteractiveCommand {
 
     @Override
     public void run() {
-        if (frame == null) {
+        if (frame == null && !init) {
             frame = new JFrame("Menu Arranger");
+            frame.addWindowListener(new WindowAdapter(){
+                public void windowClosed(WindowEvent wC) {
+                    frame = null;
+                }
+            });
             MenuViewer menuViewer = new MenuViewer();
-            //Get menu context
+
+            // Get menu context and build a treeModel from it.
             final ShadowMenu orig = menuService.getMenu();
             parseMenu(orig, treeRoot);
             treeModel.setRoot(treeRoot);
-            System.out.println(treeModel.getChildCount(treeRoot));
 
-            //THIS SECTION WILL ALLOW ME TO ADJUST THE MENU!!
+            // THIS SECTION WILL ALLOW ME TO ADJUST THE MENU
             // Right now I'm just reusing the default menu.
-            new SwingJMenuBarCreator().createMenus(orig, swingMenuBar);
-            frame.setJMenuBar(swingMenuBar);
-
-            //THIS is supposed to update the tree. ain't working.
-            //treeModel.reload(treeRoot);
-            //treeModel.setRoot(treeRoot);
-
+            // new SwingJMenuBarCreator().createMenus(orig, swingMenuBar);
+            // frame.setJMenuBar(swingMenuBar);
 
             // UI SETUP AND APPEARANCE.
-            System.out.println("root from parent class:"+ treeModel.getRoot());
-            menuViewer.setMenuTree(treeModel);
-            menuViewer.setupHiddenTree();
+            menuViewer.setupUI(treeModel);
 
             frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             frame.setContentPane(menuViewer.rootPanel);
             frame.pack();
             frame.setVisible(true);
+            init = true;
+            System.out.println(frame);
+            logService.info(init);
+        }
+        else {
+            logService.info("Made it to the else");
+            // I can't figure out how to only allow one window at a time.
+            // uiService.showDialog("Only one window can be opened at once!");
         }
     }
 
@@ -95,9 +99,7 @@ public class MenuMaker extends InteractiveCommand {
         ImageJ ij = new ImageJ();
         ij.launch(args);
 
-        System.out.println("THIS IS BEFORE IT RUNS");
-
-        // why does this have to be false? if I make it true, the command runs twice?!
         ij.command().run(MenuMaker.class, false);
+
     }
 }
