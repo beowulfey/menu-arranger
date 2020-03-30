@@ -4,7 +4,6 @@
     <list default="true" id="94ca62c7-75b6-4e58-a71c-5f2b9410407d" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/menumaker/MenuMaker.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/menumaker/MenuMaker.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/menumaker/MenuViewer.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/menumaker/MenuViewer.form" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/menumaker/MenuViewer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/menumaker/MenuViewer.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -165,7 +164,14 @@
       <option name="project" value="LOCAL" />
       <updated>1585340746146</updated>
     </task>
-    <option name="localTasksCounter" value="9" />
+    <task id="LOCAL-00009" summary="Making progress! Cleaned up a bit.">
+      <created>1585404344725</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1585404344725</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -177,7 +183,8 @@
     <MESSAGE value="Cycles through the menu properly now." />
     <MESSAGE value="Prep for big changes." />
     <MESSAGE value="Drag and drop from OLD MENU to NEW MENU is now working sort of! &#10;Can drag from old menu, and place into new menu. Cannot yet remove from new menu. &#10;BUT IT'S A START!!" />
-    <option name="LAST_COMMIT_MESSAGE" value="Drag and drop from OLD MENU to NEW MENU is now working sort of! &#10;Can drag from old menu, and place into new menu. Cannot yet remove from new menu. &#10;BUT IT'S A START!!" />
+    <MESSAGE value="Making progress! Cleaned up a bit." />
+    <option name="LAST_COMMIT_MESSAGE" value="Making progress! Cleaned up a bit." />
   </component>
   <component name="WindowStateProjectService">
     <state x="555" y="215" width="800" height="684" key="#Project_Structure" timestamp="1585316754949">
@@ -196,10 +203,10 @@
       <screen x="0" y="27" width="1920" height="1053" />
     </state>
     <state x="567" y="253" width="775" height="607" key="#com.intellij.ide.fileTemplates.ui.ConfigureTemplatesDialog/0.27.1920.1053@0.27.1920.1053" timestamp="1584997054752" />
-    <state x="768" y="272" width="374" height="569" key="#com.intellij.ide.util.MemberChooser" timestamp="1585314837671">
+    <state x="768" y="272" width="374" height="569" key="#com.intellij.ide.util.MemberChooser" timestamp="1585532291579">
       <screen x="0" y="27" width="1920" height="1053" />
     </state>
-    <state x="768" y="272" width="374" height="569" key="#com.intellij.ide.util.MemberChooser/0.27.1920.1053@0.27.1920.1053" timestamp="1585314837671" />
+    <state x="768" y="272" width="374" height="569" key="#com.intellij.ide.util.MemberChooser/0.27.1920.1053@0.27.1920.1053" timestamp="1585532291579" />
     <state x="688" y="334" width="524" height="452" key="#com.intellij.ide.util.PackageChooserDialog" timestamp="1585236402650">
       <screen x="0" y="27" width="1920" height="1053" />
     </state>
@@ -232,30 +239,30 @@
       <screen x="0" y="27" width="1920" height="1053" />
     </state>
     <state x="697" y="408" width="634" height="305" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1/0.27.1920.1053@0.27.1920.1053" timestamp="1585255603761" />
-    <state x="413" y="119" width="1084" height="876" key="CommitChangelistDialog2" timestamp="1585340746101">
+    <state x="413" y="119" width="1084" height="876" key="CommitChangelistDialog2" timestamp="1585404344681">
       <screen x="0" y="27" width="1920" height="1053" />
     </state>
-    <state x="413" y="119" width="1084" height="876" key="CommitChangelistDialog2/0.27.1920.1053@0.27.1920.1053" timestamp="1585340746101" />
+    <state x="413" y="119" width="1084" height="876" key="CommitChangelistDialog2/0.27.1920.1053@0.27.1920.1053" timestamp="1585404344681" />
     <state x="743" y="311" width="884" height="512" key="FileChooserDialogImpl" timestamp="1585330281975">
       <screen x="0" y="27" width="1920" height="1053" />
     </state>
     <state x="743" y="311" width="884" height="512" key="FileChooserDialogImpl/0.27.1920.1053@0.27.1920.1053" timestamp="1585330281975" />
-    <state width="1874" height="185" key="GridCell.Tab.0.bottom" timestamp="1585402281562">
+    <state width="1874" height="185" key="GridCell.Tab.0.bottom" timestamp="1585568861303">
       <screen x="0" y="27" width="1920" height="1053" />
     </state>
-    <state width="1874" height="185" key="GridCell.Tab.0.bottom/0.27.1920.1053@0.27.1920.1053" timestamp="1585402281562" />
-    <state width="1874" height="185" key="GridCell.Tab.0.center" timestamp="1585402281562">
+    <state width="1874" height="185" key="GridCell.Tab.0.bottom/0.27.1920.1053@0.27.1920.1053" timestamp="1585568861303" />
+    <state width="1874" height="185" key="GridCell.Tab.0.center" timestamp="1585568861302">
       <screen x="0" y="27" width="1920" height="1053" />
     </state>
-    <state width="1874" height="185" key="GridCell.Tab.0.center/0.27.1920.1053@0.27.1920.1053" timestamp="1585402281562" />
-    <state width="1874" height="185" key="GridCell.Tab.0.left" timestamp="1585402281562">
+    <state width="1874" height="185" key="GridCell.Tab.0.center/0.27.1920.1053@0.27.1920.1053" timestamp="1585568861302" />
+    <state width="1874" height="185" key="GridCell.Tab.0.left" timestamp="1585568861302">
       <screen x="0" y="27" width="1920" height="1053" />
     </state>
-    <state width="1874" height="185" key="GridCell.Tab.0.left/0.27.1920.1053@0.27.1920.1053" timestamp="1585402281562" />
-    <state width="1874" height="185" key="GridCell.Tab.0.right" timestamp="1585402281562">
+    <state width="1874" height="185" key="GridCell.Tab.0.left/0.27.1920.1053@0.27.1920.1053" timestamp="1585568861302" />
+    <state width="1874" height="185" key="GridCell.Tab.0.right" timestamp="1585568861302">
       <screen x="0" y="27" width="1920" height="1053" />
     </state>
-    <state width="1874" height="185" key="GridCell.Tab.0.right/0.27.1920.1053@0.27.1920.1053" timestamp="1585402281562" />
+    <state width="1874" height="185" key="GridCell.Tab.0.right/0.27.1920.1053@0.27.1920.1053" timestamp="1585568861302" />
     <state x="623" y="271" width="664" height="571" key="GuiDesigner.FormSource.Dialog" timestamp="1585083149974">
       <screen x="0" y="27" width="1920" height="1053" />
     </state>
@@ -276,10 +283,10 @@
       <screen x="0" y="27" width="1920" height="1053" />
     </state>
     <state x="449" y="188" width="1022" height="737" key="SettingsEditor/0.27.1920.1053@0.27.1920.1053" timestamp="1585317053602" />
-    <state x="555" y="277" width="800" height="559" key="Vcs.Push.Dialog.v2" timestamp="1585315122589">
+    <state x="555" y="277" width="800" height="559" key="Vcs.Push.Dialog.v2" timestamp="1585404346966">
       <screen x="0" y="27" width="1920" height="1053" />
     </state>
-    <state x="555" y="277" width="800" height="559" key="Vcs.Push.Dialog.v2/0.27.1920.1053@0.27.1920.1053" timestamp="1585315122589" />
+    <state x="555" y="277" width="800" height="559" key="Vcs.Push.Dialog.v2/0.27.1920.1053@0.27.1920.1053" timestamp="1585404346966" />
     <state x="624" y="252" width="672" height="677" key="run.anything.popup" timestamp="1585081418151">
       <screen x="0" y="27" width="1920" height="1053" />
     </state>

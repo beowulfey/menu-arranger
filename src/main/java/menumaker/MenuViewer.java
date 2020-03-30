@@ -26,8 +26,9 @@ public class MenuViewer {
     private DefaultTreeModel sysTreeModel = new DefaultTreeModel(tempTreeRoot);
     private DefaultTreeModel newTreeModel = new DefaultTreeModel(newTreeRoot);
 
-    public void setupUI(DefaultTreeModel menuTreeModel) {
+    public DefaultTreeModel setupUI(DefaultTreeModel menuTreeModel) {
         sysTreeModel = menuTreeModel;
+        newTreeRoot.setAllowsChildren(true);
         menuTree.setModel(sysTreeModel);
         menuTree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
 
@@ -35,35 +36,29 @@ public class MenuViewer {
         customTree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
         customTree.setDragEnabled(true);
         customTree.setDropMode(DropMode.ON_OR_INSERT);
+
         customTree.setTransferHandler(new TransferHandler() {
 
             public boolean canImport(TransferSupport info) {
-                // THIS STUFF HAPPENS WHILE THE MOUSE BUTTON IS STILL HELD!!
+                // Currently preventing drops based on two criteria:
+                // 1) If the path is null (anywhere in random space)
+                // 2) If it is on a leaf that is not the root (assuming it is a command)
 
                 info.setShowDropLocation(true);
-                TreePath item = menuTree.getSelectionPath();
                 JTree.DropLocation dl = (JTree.DropLocation) info.getDropLocation();
-
-
-
-                // Make sure it's moving a proper node! DOESN'T DO YET.
-                //if (!info.isDataFlavorSupported(DataFlavor.stringFlavor)) {
-                //    return false;
-                //}
-
-                // DEBUG
-                //System.out.println(item);
-                //System.out.println("Drop location is " + dl.getPath());
-
-                // Use this little patch of code to prevent dropping in certain areas (here it is "names" from
-                // the demo). Does this based on row number of the tree.
-                // namesPath = tree.getPathForRow(2); --> this goes above obviously
-                // // we don't support invalid paths or descendants of the names folder
-                // if (path == null || namesPath.isDescendant(path)) {
-                //    return false;
-                //      }
-                //
-
+                TreePath path = dl.getPath();
+                int dropIndex = dl.getChildIndex();
+                if (path == null) {
+                    return false;
+                }
+                else {
+                    if (dropIndex == -1 && path.getLastPathComponent() != newTreeModel.getRoot()) {
+                        DefaultMutableTreeNode node = (DefaultMutableTreeNode) path.getLastPathComponent();
+                        if (node.isLeaf()) {
+                            return false;
+                        }
+                    }
+                }
                 return true;
             }
 
@@ -89,7 +84,12 @@ public class MenuViewer {
 
                 // create a new node to represent the data and insert it into the model
                 DefaultMutableTreeNode newNode = (DefaultMutableTreeNode) menuTree.getLastSelectedPathComponent();
-                System.out.println(newNode);
+
+                if (newNode.isLeaf() == true) {
+                    System.out.println("This is a leaf!");
+                    //newNode.setAllowsChildren(false);
+                }
+
                 DefaultMutableTreeNode parentNode = (DefaultMutableTreeNode) path.getLastPathComponent();
                 newTreeModel.insertNodeInto(newNode, parentNode, childIndex);
 
@@ -101,7 +101,7 @@ public class MenuViewer {
             }
         });
 
-
+        return newTreeModel;
     }
 
 
