@@ -3,8 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="94ca62c7-75b6-4e58-a71c-5f2b9410407d" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/menumaker/MenuMaker.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/menumaker/MenuMaker.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/menumaker/MenuViewer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/menumaker/MenuViewer.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -171,7 +169,14 @@
       <option name="project" value="LOCAL" />
       <updated>1585404344725</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="Lots of changes. Learning how to build the new menu. No major user-facing changes (it's still broken).">
+      <created>1585569311100</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1585569311100</updated>
+    </task>
+    <option name="localTasksCounter" value="11" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -184,7 +189,8 @@
     <MESSAGE value="Prep for big changes." />
     <MESSAGE value="Drag and drop from OLD MENU to NEW MENU is now working sort of! &#10;Can drag from old menu, and place into new menu. Cannot yet remove from new menu. &#10;BUT IT'S A START!!" />
     <MESSAGE value="Making progress! Cleaned up a bit." />
-    <option name="LAST_COMMIT_MESSAGE" value="Making progress! Cleaned up a bit." />
+    <MESSAGE value="Lots of changes. Learning how to build the new menu. No major user-facing changes (it's still broken)." />
+    <option name="LAST_COMMIT_MESSAGE" value="Lots of changes. Learning how to build the new menu. No major user-facing changes (it's still broken)." />
   </component>
   <component name="WindowStateProjectService">
     <state x="555" y="215" width="800" height="684" key="#Project_Structure" timestamp="1585316754949">
@@ -239,30 +245,30 @@
       <screen x="0" y="27" width="1920" height="1053" />
     </state>
     <state x="697" y="408" width="634" height="305" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1/0.27.1920.1053@0.27.1920.1053" timestamp="1585255603761" />
-    <state x="413" y="119" width="1084" height="876" key="CommitChangelistDialog2" timestamp="1585404344681">
+    <state x="413" y="119" width="1084" height="876" key="CommitChangelistDialog2" timestamp="1585569311010">
       <screen x="0" y="27" width="1920" height="1053" />
     </state>
-    <state x="413" y="119" width="1084" height="876" key="CommitChangelistDialog2/0.27.1920.1053@0.27.1920.1053" timestamp="1585404344681" />
+    <state x="413" y="119" width="1084" height="876" key="CommitChangelistDialog2/0.27.1920.1053@0.27.1920.1053" timestamp="1585569311010" />
     <state x="743" y="311" width="884" height="512" key="FileChooserDialogImpl" timestamp="1585330281975">
       <screen x="0" y="27" width="1920" height="1053" />
     </state>
     <state x="743" y="311" width="884" height="512" key="FileChooserDialogImpl/0.27.1920.1053@0.27.1920.1053" timestamp="1585330281975" />
-    <state width="1874" height="185" key="GridCell.Tab.0.bottom" timestamp="1585568861303">
+    <state width="1874" height="185" key="GridCell.Tab.0.bottom" timestamp="1585569316953">
       <screen x="0" y="27" width="1920" height="1053" />
     </state>
-    <state width="1874" height="185" key="GridCell.Tab.0.bottom/0.27.1920.1053@0.27.1920.1053" timestamp="1585568861303" />
-    <state width="1874" height="185" key="GridCell.Tab.0.center" timestamp="1585568861302">
+    <state width="1874" height="185" key="GridCell.Tab.0.bottom/0.27.1920.1053@0.27.1920.1053" timestamp="1585569316953" />
+    <state width="1874" height="185" key="GridCell.Tab.0.center" timestamp="1585569316953">
       <screen x="0" y="27" width="1920" height="1053" />
     </state>
-    <state width="1874" height="185" key="GridCell.Tab.0.center/0.27.1920.1053@0.27.1920.1053" timestamp="1585568861302" />
-    <state width="1874" height="185" key="GridCell.Tab.0.left" timestamp="1585568861302">
+    <state width="1874" height="185" key="GridCell.Tab.0.center/0.27.1920.1053@0.27.1920.1053" timestamp="1585569316953" />
+    <state width="1874" height="185" key="GridCell.Tab.0.left" timestamp="1585569316953">
       <screen x="0" y="27" width="1920" height="1053" />
     </state>
-    <state width="1874" height="185" key="GridCell.Tab.0.left/0.27.1920.1053@0.27.1920.1053" timestamp="1585568861302" />
-    <state width="1874" height="185" key="GridCell.Tab.0.right" timestamp="1585568861302">
+    <state width="1874" height="185" key="GridCell.Tab.0.left/0.27.1920.1053@0.27.1920.1053" timestamp="1585569316953" />
+    <state width="1874" height="185" key="GridCell.Tab.0.right" timestamp="1585569316953">
       <screen x="0" y="27" width="1920" height="1053" />
     </state>
-    <state width="1874" height="185" key="GridCell.Tab.0.right/0.27.1920.1053@0.27.1920.1053" timestamp="1585568861302" />
+    <state width="1874" height="185" key="GridCell.Tab.0.right/0.27.1920.1053@0.27.1920.1053" timestamp="1585569316953" />
     <state x="623" y="271" width="664" height="571" key="GuiDesigner.FormSource.Dialog" timestamp="1585083149974">
       <screen x="0" y="27" width="1920" height="1053" />
     </state>
