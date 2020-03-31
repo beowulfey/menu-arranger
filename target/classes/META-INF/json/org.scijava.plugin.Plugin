@@ -1,1 +1,1 @@
-{"class":"menumaker.MenuMaker","values":{"menuPath":"File>Arrange Menus","type":"org.scijava.command.Command"}}
+{"class":"menuarranger.MenuArranger","values":{"menuPath":"File>Arrange Menus","type":"org.scijava.command.Command"}}{"class":"menuarranger.CustomMenuService","values":{"type":"org.scijava.service.Service"}}

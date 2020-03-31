@@ -1,4 +1,4 @@
-package menumaker;
+package menuarranger;
 
 import javax.swing.*;
 import javax.swing.border.TitledBorder;

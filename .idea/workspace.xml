@@ -2,8 +2,32 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="94ca62c7-75b6-4e58-a71c-5f2b9410407d" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/menuarranger/CustomMenuService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/fiji-menu-plugin.iml" beforeDir="false" afterPath="$PROJECT_DIR$/fiji-menu-plugin.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/menumaker/MenuMaker.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/menuarranger/MenuArranger.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/menumaker/MenuViewer.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/menuarranger/MenuViewer.form" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/menumaker/MenuViewer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/menuarranger/MenuViewer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/META-INF/json/org.scijava.plugin.Plugin" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/META-INF/json/org.scijava.plugin.Plugin" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/menumaker/MenuMaker$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/menumaker/MenuMaker.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/menumaker/MenuViewer$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/menumaker/MenuViewer.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/menuarranger-0.1.0-sources.jar" beforeDir="false" afterPath="$PROJECT_DIR$/target/menuarranger-0.1.0-sources.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/menuarranger-0.1.0-tests.jar" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/menuarranger-0.1.0.jar" beforeDir="false" afterPath="$PROJECT_DIR$/target/menuarranger-0.1.0.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/com/intellij/uiDesigner/core/AbstractLayout.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/com/intellij/uiDesigner/core/DimensionInfo.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/com/intellij/uiDesigner/core/GridConstraints.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/com/intellij/uiDesigner/core/GridLayoutManager.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/com/intellij/uiDesigner/core/HorizontalInfo.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/com/intellij/uiDesigner/core/LayoutState.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/com/intellij/uiDesigner/core/Spacer.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/com/intellij/uiDesigner/core/SupportCode$TextWithMnemonic.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/com/intellij/uiDesigner/core/SupportCode.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/com/intellij/uiDesigner/core/Util.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/test-classes/com/intellij/uiDesigner/core/VerticalInfo.class" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -51,19 +75,19 @@
     <property name="project.structure.side.proportion" value="0.2" />
     <property name="restartRequiresConfirmation" value="false" />
     <property name="run.code.analysis.last.selected.profile" value="pProject Default" />
-    <property name="settings.editor.selected.configurable" value="project.propGUI" />
+    <property name="settings.editor.selected.configurable" value="MavenSettings" />
   </component>
   <component name="RecentsManager">
-    <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/src/main/java/menumaker" />
-      <recent name="$PROJECT_DIR$/src/main/java" />
-      <recent name="$PROJECT_DIR$/src/main/java/fiji/sc/menu-arranger" />
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/main/java/" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="menumaker" />
     </key>
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/src/main/java/" />
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/main/java/menumaker" />
+      <recent name="$PROJECT_DIR$/src/main/java" />
+      <recent name="$PROJECT_DIR$/src/main/java/fiji/sc/menu-arranger" />
     </key>
   </component>
   <component name="RunAnythingCache">
@@ -72,10 +96,10 @@
       <command value="mvn clean" />
     </option>
   </component>
-  <component name="RunManager" selected="Application.MenuMaker">
-    <configuration name="MenuMaker" type="Application" factoryName="Application" nameIsGenerated="true">
+  <component name="RunManager" selected="Application.MenuArranger">
+    <configuration name="MenuArranger" type="Application" factoryName="Application">
       <option name="INCLUDE_PROVIDED_SCOPE" value="true" />
-      <option name="MAIN_CLASS_NAME" value="menumaker.MenuMaker" />
+      <option name="MAIN_CLASS_NAME" value="menuarranger.MenuArranger" />
       <module name="fiji-menu-plugin" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -95,7 +119,7 @@
       <method v="2" />
     </configuration>
     <list>
-      <item itemvalue="Application.MenuMaker" />
+      <item itemvalue="Application.MenuArranger" />
       <item itemvalue="JAR Application.Unnamed" />
     </list>
   </component>
@@ -191,7 +215,14 @@
       <option name="project" value="LOCAL" />
       <updated>1585572001262</updated>
     </task>
-    <option name="localTasksCounter" value="13" />
+    <task id="LOCAL-00013" summary="Cleaning up the public-facing commit messages ;)">
+      <created>1585572126969</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1585572126969</updated>
+    </task>
+    <option name="localTasksCounter" value="14" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -206,7 +237,8 @@
     <MESSAGE value="Making progress! Cleaned up a bit." />
     <MESSAGE value="Lots of changes. Learning how to build the new menu. No major user-facing changes (it's still broken)." />
     <MESSAGE value="Updated POM to new github repo." />
-    <option name="LAST_COMMIT_MESSAGE" value="Updated POM to new github repo." />
+    <MESSAGE value="Cleaning up the public-facing commit messages ;)" />
+    <option name="LAST_COMMIT_MESSAGE" value="Cleaning up the public-facing commit messages ;)" />
   </component>
   <component name="WindowStateProjectService">
     <state x="555" y="215" width="800" height="684" key="#Project_Structure" timestamp="1585316754949">
@@ -217,10 +249,10 @@
       <screen x="0" y="27" width="1920" height="1053" />
     </state>
     <state x="743" y="219" width="424" height="675" key="#com.intellij.codeInsight.i18n.I18nizeQuickFixDialog_Form/0.27.1920.1053@0.27.1920.1053" timestamp="1585053574706" />
-    <state x="418" y="211" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1585316104429">
+    <state x="418" y="211" key="#com.intellij.execution.impl.EditConfigurationsDialog" timestamp="1585572661895">
       <screen x="0" y="27" width="1920" height="1053" />
     </state>
-    <state x="418" y="211" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.27.1920.1053@0.27.1920.1053" timestamp="1585316104429" />
+    <state x="418" y="211" key="#com.intellij.execution.impl.EditConfigurationsDialog/0.27.1920.1053@0.27.1920.1053" timestamp="1585572661895" />
     <state x="567" y="253" width="775" height="607" key="#com.intellij.ide.fileTemplates.ui.ConfigureTemplatesDialog" timestamp="1584997054752">
       <screen x="0" y="27" width="1920" height="1053" />
     </state>
@@ -261,30 +293,30 @@
       <screen x="0" y="27" width="1920" height="1053" />
     </state>
     <state x="697" y="408" width="634" height="305" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1/0.27.1920.1053@0.27.1920.1053" timestamp="1585255603761" />
-    <state x="413" y="119" width="1084" height="876" key="CommitChangelistDialog2" timestamp="1585572001205">
+    <state x="413" y="119" width="1084" height="876" key="CommitChangelistDialog2" timestamp="1585572126902">
       <screen x="0" y="27" width="1920" height="1053" />
     </state>
-    <state x="413" y="119" width="1084" height="876" key="CommitChangelistDialog2/0.27.1920.1053@0.27.1920.1053" timestamp="1585572001205" />
+    <state x="413" y="119" width="1084" height="876" key="CommitChangelistDialog2/0.27.1920.1053@0.27.1920.1053" timestamp="1585572126902" />
     <state x="743" y="311" width="884" height="512" key="FileChooserDialogImpl" timestamp="1585330281975">
       <screen x="0" y="27" width="1920" height="1053" />
     </state>
     <state x="743" y="311" width="884" height="512" key="FileChooserDialogImpl/0.27.1920.1053@0.27.1920.1053" timestamp="1585330281975" />
-    <state width="1874" height="185" key="GridCell.Tab.0.bottom" timestamp="1585572100235">
+    <state width="1874" height="185" key="GridCell.Tab.0.bottom" timestamp="1585680320001">
       <screen x="0" y="27" width="1920" height="1053" />
     </state>
-    <state width="1874" height="185" key="GridCell.Tab.0.bottom/0.27.1920.1053@0.27.1920.1053" timestamp="1585572100235" />
-    <state width="1874" height="185" key="GridCell.Tab.0.center" timestamp="1585572100235">
+    <state width="1874" height="185" key="GridCell.Tab.0.bottom/0.27.1920.1053@0.27.1920.1053" timestamp="1585680320001" />
+    <state width="1874" height="185" key="GridCell.Tab.0.center" timestamp="1585680320001">
       <screen x="0" y="27" width="1920" height="1053" />
     </state>
-    <state width="1874" height="185" key="GridCell.Tab.0.center/0.27.1920.1053@0.27.1920.1053" timestamp="1585572100235" />
-    <state width="1874" height="185" key="GridCell.Tab.0.left" timestamp="1585572100235">
+    <state width="1874" height="185" key="GridCell.Tab.0.center/0.27.1920.1053@0.27.1920.1053" timestamp="1585680320001" />
+    <state width="1874" height="185" key="GridCell.Tab.0.left" timestamp="1585680320001">
       <screen x="0" y="27" width="1920" height="1053" />
     </state>
-    <state width="1874" height="185" key="GridCell.Tab.0.left/0.27.1920.1053@0.27.1920.1053" timestamp="1585572100235" />
-    <state width="1874" height="185" key="GridCell.Tab.0.right" timestamp="1585572100235">
+    <state width="1874" height="185" key="GridCell.Tab.0.left/0.27.1920.1053@0.27.1920.1053" timestamp="1585680320001" />
+    <state width="1874" height="185" key="GridCell.Tab.0.right" timestamp="1585680320001">
       <screen x="0" y="27" width="1920" height="1053" />
     </state>
-    <state width="1874" height="185" key="GridCell.Tab.0.right/0.27.1920.1053@0.27.1920.1053" timestamp="1585572100235" />
+    <state width="1874" height="185" key="GridCell.Tab.0.right/0.27.1920.1053@0.27.1920.1053" timestamp="1585680320001" />
     <state x="623" y="271" width="664" height="571" key="GuiDesigner.FormSource.Dialog" timestamp="1585083149974">
       <screen x="0" y="27" width="1920" height="1053" />
     </state>
@@ -301,14 +333,14 @@
       <screen x="0" y="27" width="1920" height="1053" />
     </state>
     <state x="545" y="235" width="820" height="643" key="RollbackChangesDialog/0.27.1920.1053@0.27.1920.1053" timestamp="1585066882663" />
-    <state x="449" y="188" width="1022" height="737" key="SettingsEditor" timestamp="1585317053602">
+    <state x="449" y="188" width="1022" height="737" key="SettingsEditor" timestamp="1585653515268">
       <screen x="0" y="27" width="1920" height="1053" />
     </state>
-    <state x="449" y="188" width="1022" height="737" key="SettingsEditor/0.27.1920.1053@0.27.1920.1053" timestamp="1585317053602" />
-    <state x="555" y="277" width="800" height="559" key="Vcs.Push.Dialog.v2" timestamp="1585572005991">
+    <state x="449" y="188" width="1022" height="737" key="SettingsEditor/0.27.1920.1053@0.27.1920.1053" timestamp="1585653515268" />
+    <state x="555" y="277" width="800" height="559" key="Vcs.Push.Dialog.v2" timestamp="1585572129127">
       <screen x="0" y="27" width="1920" height="1053" />
     </state>
-    <state x="555" y="277" width="800" height="559" key="Vcs.Push.Dialog.v2/0.27.1920.1053@0.27.1920.1053" timestamp="1585572005991" />
+    <state x="555" y="277" width="800" height="559" key="Vcs.Push.Dialog.v2/0.27.1920.1053@0.27.1920.1053" timestamp="1585572129127" />
     <state x="624" y="252" width="672" height="677" key="run.anything.popup" timestamp="1585081418151">
       <screen x="0" y="27" width="1920" height="1053" />
     </state>
