@@ -1,5 +1,4 @@
 // TO DO:
-// Show a pop up when there is a duplicate menu item.
 // Build a shadow menu.
 
 package menuarranger;
@@ -164,6 +163,9 @@ public class MenuArranger extends ContextCommand implements Runnable {
 
     @Override
     public void run() {
+        // TO DO: Clean up this section. THe main constructor is kind of funky!
+        // Getting close though!
+
 
         if (frame == null && !init) {
             MenuViewer menuViewer = new MenuViewer();
@@ -202,8 +204,6 @@ public class MenuArranger extends ContextCommand implements Runnable {
         else {
             logService.info("Made it to the else");
             // I can't figure out how to only allow one window at a time.
-            // This did not work...
-            //uiService.showDialog("Only one window can be opened at once!");
         }
     }
 }
