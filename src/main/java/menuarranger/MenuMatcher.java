@@ -17,6 +17,7 @@ public class MenuMatcher extends JDialog {
     protected ModuleInfo selection;
     private int selIndex;
     private ModuleInfo[] optionsSaved;
+    public boolean finished = false;
 
     public MenuMatcher(ModuleInfo[] options) {
         DefaultListModel<String> listModel = new DefaultListModel<>();
@@ -60,19 +61,26 @@ public class MenuMatcher extends JDialog {
         setAlwaysOnTop(true);
         setContentPane(contentPane);
         setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+        setModal(true);
         pack();
         setVisible(true);
+
     }
 
     private void onOK() {
         selection = optionsSaved[selIndex];
         System.out.println("OK Clicked, chose " + selIndex);
+        finished = true;
         dispose();
 
     }
 
     public ModuleInfo getSelection() {
         return selection;
+    }
+
+    public boolean madeChoice() {
+        return finished;
     }
 
 

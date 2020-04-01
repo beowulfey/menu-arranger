@@ -137,10 +137,8 @@ public class MenuArranger extends ContextCommand implements Runnable {
                 ModuleInfo[] options = {dupeMap.get(key), menuMap.get(key)};
                 MenuMatcher newDialog = new MenuMatcher(options);
                 dialog = new JDialog(newDialog);
-                // NEED TO PAUSE HERE FOR RETURN!
                 ModuleInfo selection =  newDialog.getSelection();
                 logService.info("You chose "+selection);
-
             }
             else if (menuMap.containsKey(key)){
                 logService.debug("Found a match for "+key);
