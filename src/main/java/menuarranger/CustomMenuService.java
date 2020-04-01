@@ -47,6 +47,7 @@ import org.scijava.service.Service;
 
 import java.util.*;
 
+// DefaultMenuService has a priority of 0. Not sure what that means for me here yet.
 
 @Plugin(type = Service.class)
 public class CustomMenuService extends AbstractService implements MenuService

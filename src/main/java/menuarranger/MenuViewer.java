@@ -85,7 +85,7 @@ public class MenuViewer {
                 // create a new node to represent the data and insert it into the model
                 DefaultMutableTreeNode newNode = (DefaultMutableTreeNode) menuTree.getLastSelectedPathComponent();
 
-                if (newNode.isLeaf() == true) {
+                if (newNode.isLeaf()) {
                     System.out.println("This is a leaf!");
                     //newNode.setAllowsChildren(false);
                 }
