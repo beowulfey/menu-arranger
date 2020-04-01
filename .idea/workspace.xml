@@ -4,7 +4,11 @@
     <list default="true" id="94ca62c7-75b6-4e58-a71c-5f2b9410407d" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/menuarranger/MenuArranger.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/menuarranger/MenuArranger.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/menuarranger/MenuMatcher.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/menuarranger/MenuMatcher.form" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/menuarranger/MenuMatcher.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/menuarranger/MenuMatcher.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/menuarranger/MenuViewer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/menuarranger/MenuViewer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/menuarranger-0.1.0-sources.jar" beforeDir="false" afterPath="$PROJECT_DIR$/target/menuarranger-0.1.0-sources.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/menuarranger-0.1.0.jar" beforeDir="false" afterPath="$PROJECT_DIR$/target/menuarranger-0.1.0.jar" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -213,7 +217,14 @@
       <option name="project" value="LOCAL" />
       <updated>1585749162790</updated>
     </task>
-    <option name="localTasksCounter" value="16" />
+    <task id="LOCAL-00016" summary="Now waits for user input before continuing. Properly handles duplicates!">
+      <created>1585758511807</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1585758511807</updated>
+    </task>
+    <option name="localTasksCounter" value="17" />
     <servers />
   </component>
   <component name="VcsManagerConfiguration">
@@ -231,7 +242,8 @@
     <MESSAGE value="Cleaning up the public-facing commit messages ;)" />
     <MESSAGE value="Changed class name to match its function and have changed a lot of the code. Now successfully can parse the menu and form a hashmap using the menu &quot;command&quot;, which in turn allows me to access the ModuleInfo or PluginInfo associated with it. Still need to figure out a way to build a ShadowMenu from that based on the tree I've built. Major issue next!" />
     <MESSAGE value="Seems like I may have gotten the selection popup almost working. Needs to pause for user input though!" />
-    <option name="LAST_COMMIT_MESSAGE" value="Seems like I may have gotten the selection popup almost working. Needs to pause for user input though!" />
+    <MESSAGE value="Now waits for user input before continuing. Properly handles duplicates!" />
+    <option name="LAST_COMMIT_MESSAGE" value="Now waits for user input before continuing. Properly handles duplicates!" />
   </component>
   <component name="WindowStateProjectService">
     <state x="555" y="215" width="800" height="684" key="#Project_Structure" timestamp="1585316754949">
@@ -286,30 +298,30 @@
       <screen x="0" y="27" width="1920" height="1053" />
     </state>
     <state x="697" y="408" width="634" height="305" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1/0.27.1920.1053@0.27.1920.1053" timestamp="1585255603761" />
-    <state x="396" y="105" width="1084" height="876" key="CommitChangelistDialog2" timestamp="1585749162739">
+    <state x="396" y="105" width="1084" height="876" key="CommitChangelistDialog2" timestamp="1585758511688">
       <screen x="0" y="27" width="1920" height="1053" />
     </state>
-    <state x="396" y="105" width="1084" height="876" key="CommitChangelistDialog2/0.27.1920.1053@0.27.1920.1053" timestamp="1585749162739" />
+    <state x="396" y="105" width="1084" height="876" key="CommitChangelistDialog2/0.27.1920.1053@0.27.1920.1053" timestamp="1585758511688" />
     <state x="743" y="311" width="884" height="512" key="FileChooserDialogImpl" timestamp="1585330281975">
       <screen x="0" y="27" width="1920" height="1053" />
     </state>
     <state x="743" y="311" width="884" height="512" key="FileChooserDialogImpl/0.27.1920.1053@0.27.1920.1053" timestamp="1585330281975" />
-    <state width="1874" height="185" key="GridCell.Tab.0.bottom" timestamp="1585758463440">
+    <state width="1874" height="185" key="GridCell.Tab.0.bottom" timestamp="1585760567054">
       <screen x="0" y="27" width="1920" height="1053" />
     </state>
-    <state width="1874" height="185" key="GridCell.Tab.0.bottom/0.27.1920.1053@0.27.1920.1053" timestamp="1585758463440" />
-    <state width="1874" height="185" key="GridCell.Tab.0.center" timestamp="1585758463440">
+    <state width="1874" height="185" key="GridCell.Tab.0.bottom/0.27.1920.1053@0.27.1920.1053" timestamp="1585760567054" />
+    <state width="1874" height="185" key="GridCell.Tab.0.center" timestamp="1585760567053">
       <screen x="0" y="27" width="1920" height="1053" />
     </state>
-    <state width="1874" height="185" key="GridCell.Tab.0.center/0.27.1920.1053@0.27.1920.1053" timestamp="1585758463440" />
-    <state width="1874" height="185" key="GridCell.Tab.0.left" timestamp="1585758463440">
+    <state width="1874" height="185" key="GridCell.Tab.0.center/0.27.1920.1053@0.27.1920.1053" timestamp="1585760567053" />
+    <state width="1874" height="185" key="GridCell.Tab.0.left" timestamp="1585760567053">
       <screen x="0" y="27" width="1920" height="1053" />
     </state>
-    <state width="1874" height="185" key="GridCell.Tab.0.left/0.27.1920.1053@0.27.1920.1053" timestamp="1585758463440" />
-    <state width="1874" height="185" key="GridCell.Tab.0.right" timestamp="1585758463440">
+    <state width="1874" height="185" key="GridCell.Tab.0.left/0.27.1920.1053@0.27.1920.1053" timestamp="1585760567053" />
+    <state width="1874" height="185" key="GridCell.Tab.0.right" timestamp="1585760567054">
       <screen x="0" y="27" width="1920" height="1053" />
     </state>
-    <state width="1874" height="185" key="GridCell.Tab.0.right/0.27.1920.1053@0.27.1920.1053" timestamp="1585758463440" />
+    <state width="1874" height="185" key="GridCell.Tab.0.right/0.27.1920.1053@0.27.1920.1053" timestamp="1585760567054" />
     <state x="623" y="271" width="664" height="571" key="GuiDesigner.FormSource.Dialog" timestamp="1585083149974">
       <screen x="0" y="27" width="1920" height="1053" />
     </state>
@@ -334,10 +346,10 @@
       <screen x="0" y="27" width="1920" height="1053" />
     </state>
     <state x="817" y="349" width="286" height="415" key="UIDesigner.ListEditorDialog/0.27.1920.1053@0.27.1920.1053" timestamp="1585692117328" />
-    <state x="555" y="277" width="800" height="559" key="Vcs.Push.Dialog.v2" timestamp="1585680517276">
+    <state x="555" y="277" width="800" height="559" key="Vcs.Push.Dialog.v2" timestamp="1585758514240">
       <screen x="0" y="27" width="1920" height="1053" />
     </state>
-    <state x="555" y="277" width="800" height="559" key="Vcs.Push.Dialog.v2/0.27.1920.1053@0.27.1920.1053" timestamp="1585680517276" />
+    <state x="555" y="277" width="800" height="559" key="Vcs.Push.Dialog.v2/0.27.1920.1053@0.27.1920.1053" timestamp="1585758514240" />
     <state x="624" y="196" width="662" height="722" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1585694425771">
       <screen x="0" y="27" width="1920" height="1053" />
     </state>

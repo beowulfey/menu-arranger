@@ -7,6 +7,12 @@ import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreePath;
 import javax.swing.tree.TreeSelectionModel;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+
+import static com.sun.java.accessibility.util.AWTEventMonitor.addWindowListener;
 
 public class MenuViewer {
     protected JPanel rootPanel;
@@ -36,6 +42,19 @@ public class MenuViewer {
         customTree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
         customTree.setDragEnabled(true);
         customTree.setDropMode(DropMode.ON_OR_INSERT);
+
+        okButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                onOK();
+            }
+        });
+
+        cancelButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("Cancel pressed!");
+            }
+        });
+
 
         customTree.setTransferHandler(new TransferHandler() {
 
@@ -103,7 +122,9 @@ public class MenuViewer {
 
         return newTreeModel;
     }
-
+    public void onOK() {
+        System.out.println("OK Button pressed!");
+    }
 
     //////////////////////////////////////////////////////////
     // UI STUFF THAT I SHOULD NOT HAVE TO TOUCH
@@ -185,5 +206,6 @@ public class MenuViewer {
     public JComponent $$$getRootComponent$$$() {
         return rootPanel;
     }
+
 
 }

@@ -96,7 +96,6 @@ public class MenuArranger extends ContextCommand implements Runnable {
                 String key = mod.getMenuPath().getLeaf().toString();            // Take the leaf node of each path for a key
                 ModuleInfo oldValue = menuMap.put(key, mod);
                 if (oldValue != null && oldValue.getMenuPath() != mod.getMenuPath()) {
-                    logService.warn("Multiple options detected!" + oldValue.getMenuPath() + " vs. " + mod.getMenuPath());
                     ModuleInfo olderValue = dupeMap.put(key, oldValue);
                     if (olderValue != null && olderValue.getMenuPath() != oldValue.getMenuPath()) {
                         logService.warn("Wow! There are three of this menu entry! You suck at naming plugins. The third one " +
@@ -133,12 +132,18 @@ public class MenuArranger extends ContextCommand implements Runnable {
             TreeNode[] childPath = root.getPath(); // Get the path as an array.
             List<TreeNode> pathList = new ArrayList<>(Arrays.asList(childPath)); //Array to list is immutable so have to make a copy.
             String key = pathList.get(pathList.size() - 1).toString();
+            List<String> pathListString = new ArrayList<String>();
+            for (TreeNode treeNode : pathList) {
+                pathListString.add(treeNode.toString());
+            }
+            pathListString.remove(0);
+
             if (dupeMap.containsKey(key)){
+                logService.info("Duplicate item detected! Deferring to user input");
                 ModuleInfo[] options = {dupeMap.get(key), menuMap.get(key)};
-                MenuMatcher newDialog = new MenuMatcher(options);
+                MenuMatcher newDialog = new MenuMatcher(options, pathListString);
                 dialog = new JDialog(newDialog);
                 ModuleInfo selection =  newDialog.getSelection();
-                logService.info("You chose "+selection);
             }
             else if (menuMap.containsKey(key)){
                 logService.debug("Found a match for "+key);
@@ -161,14 +166,14 @@ public class MenuArranger extends ContextCommand implements Runnable {
     public void run() {
 
         if (frame == null && !init) {
+            MenuViewer menuViewer = new MenuViewer();
             frame = new JFrame("Menu Arranger");
             frame.addWindowListener(new WindowAdapter(){
                 public void windowClosed(WindowEvent wC) {
                     frame = null;
-                    makeNewMenu(treeModel);
+                    makeNewMenu(customTreeModel);
                 }
             });
-            MenuViewer menuViewer = new MenuViewer();
 
 
 
