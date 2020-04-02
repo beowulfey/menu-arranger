@@ -12,9 +12,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
-import static com.sun.java.accessibility.util.AWTEventMonitor.addWindowListener;
-
-public class MenuViewer {
+public class MenuViewer extends JDialog {
     protected JPanel rootPanel;
     protected JTree menuTree;
     protected JButton cancelButton;
@@ -27,17 +25,14 @@ public class MenuViewer {
     protected JScrollPane visiblePane;
     protected JTree customTree;
 
-    private DefaultMutableTreeNode tempTreeRoot = new DefaultMutableTreeNode("FAILED");
     private DefaultMutableTreeNode newTreeRoot = new DefaultMutableTreeNode("Drop Here");
-    private DefaultTreeModel sysTreeModel = new DefaultTreeModel(tempTreeRoot);
     private DefaultTreeModel newTreeModel = new DefaultTreeModel(newTreeRoot);
 
-    public DefaultTreeModel setupUI(DefaultTreeModel menuTreeModel) {
-        sysTreeModel = menuTreeModel;
-        newTreeRoot.setAllowsChildren(true);
-        menuTree.setModel(sysTreeModel);
-        menuTree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
+    public DefaultTreeModel finalTreeModel = null;
 
+    public MenuViewer(DefaultTreeModel menuTreeModel) {
+        menuTree.setModel(menuTreeModel);
+        menuTree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
         customTree.setModel(newTreeModel);
         customTree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
         customTree.setDragEnabled(true);
@@ -48,14 +43,11 @@ public class MenuViewer {
                 onOK();
             }
         });
-
         cancelButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                System.out.println("Cancel pressed!");
+                onCancel();
             }
         });
-
-
         customTree.setTransferHandler(new TransferHandler() {
 
             public boolean canImport(TransferSupport info) {
@@ -69,13 +61,10 @@ public class MenuViewer {
                 int dropIndex = dl.getChildIndex();
                 if (path == null) {
                     return false;
-                }
-                else {
+                } else {
                     if (dropIndex == -1 && path.getLastPathComponent() != newTreeModel.getRoot()) {
                         DefaultMutableTreeNode node = (DefaultMutableTreeNode) path.getLastPathComponent();
-                        if (node.isLeaf()) {
-                            return false;
-                        }
+                        return !node.isLeaf();
                     }
                 }
                 return true;
@@ -104,10 +93,10 @@ public class MenuViewer {
                 // create a new node to represent the data and insert it into the model
                 DefaultMutableTreeNode newNode = (DefaultMutableTreeNode) menuTree.getLastSelectedPathComponent();
 
-                if (newNode.isLeaf()) {
-                    System.out.println("This is a leaf!");
-                    //newNode.setAllowsChildren(false);
-                }
+                //if (newNode.isLeaf()) {
+                //    System.out.println("This is a leaf!");
+                //    //newNode.setAllowsChildren(false);
+                //}
 
                 DefaultMutableTreeNode parentNode = (DefaultMutableTreeNode) path.getLastPathComponent();
                 newTreeModel.insertNodeInto(newNode, parentNode, childIndex);
@@ -120,10 +109,47 @@ public class MenuViewer {
             }
         });
 
-        return newTreeModel;
+
     }
+
+    public DefaultTreeModel setupGUI() {
+        isModal();
+        setContentPane(rootPanel);
+        pack();
+        setVisible(true);
+        //addWindowListener(new WindowAdapter() {
+        //    public void windowClosed(WindowEvent wC) {
+        //        if (finalTreeModel == null){
+        //
+        //        }
+        //    }
+        //});
+        return finalTreeModel;
+    }
+
+    public void close() {
+        setVisible(false);
+    }
+
     public void onOK() {
-        System.out.println("OK Button pressed!");
+        System.out.println("OK pressed");
+        setCustomTree();
+        close();
+    }
+
+    public void onCancel() {
+        close();
+    }
+
+    public void setCustomTree() {
+        System.out.println("Setting custom tree. Here is child count: ");
+        finalTreeModel = newTreeModel;
+        System.out.println(finalTreeModel.getChildCount(finalTreeModel.getRoot()));
+    }
+
+    public DefaultTreeModel getModel() {
+        System.out.println("Returning tree");
+        return finalTreeModel;
     }
 
     //////////////////////////////////////////////////////////

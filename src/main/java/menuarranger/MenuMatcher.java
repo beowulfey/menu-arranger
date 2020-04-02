@@ -21,8 +21,8 @@ public class MenuMatcher extends JDialog {
 
     public MenuMatcher(ModuleInfo[] options, List<String> newPath) {
         DefaultListModel<String> listModel = new DefaultListModel<>();
-        listModel.addElement(options[0].getMenuPath().toString());
         listModel.addElement(options[1].getMenuPath().toString());
+        listModel.addElement(options[0].getMenuPath().toString());
         dialogLabel.setText("Please select for entry at: " + String.join(">>", newPath.toString()));
         optionList.setModel(listModel);
         optionList.setSelectedIndex(0);
@@ -64,7 +64,6 @@ public class MenuMatcher extends JDialog {
         setModal(true);
         pack();
         setVisible(true);
-
     }
 
     private void onOK() {

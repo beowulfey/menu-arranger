@@ -5,7 +5,6 @@ package menuarranger;
 
 import org.scijava.command.Command;
 import org.scijava.command.ContextCommand;
-import org.scijava.event.EventService;
 import org.scijava.log.LogService;
 import org.scijava.menu.MenuService;
 import org.scijava.menu.ShadowMenu;
@@ -13,14 +12,12 @@ import org.scijava.module.ModuleInfo;
 import org.scijava.module.ModuleService;
 import org.scijava.plugin.Parameter;
 import org.scijava.plugin.Plugin;
-import org.scijava.ui.swing.menu.SwingJMenuBarCreator;
+import org.scijava.thread.ThreadService;
 
 import javax.swing.*;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreeNode;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -36,23 +33,33 @@ public class MenuArranger extends ContextCommand implements Runnable {
     @Parameter
     private LogService logService;
     @Parameter
-    EventService eventService;
+    ThreadService threadService;
     @Parameter
     private CustomMenuService customMenuService;
 
-    private JFrame frame;
-    private JDialog dialog;
-    private DefaultMutableTreeNode treeRoot = new DefaultMutableTreeNode("Menu");
-    private DefaultTreeModel treeModel = new DefaultTreeModel(treeRoot);
-    public DefaultTreeModel customTreeModel = new DefaultTreeModel(treeRoot);
-    public ShadowMenu customMenu = null;
-    private JMenuBar swingMenuBar = new JMenuBar();
-    private HashMap<String, ModuleInfo> menuMap = new HashMap<>();
-    private HashMap<String, ModuleInfo> dupeMap = new HashMap<>();
+    private DefaultMutableTreeNode treeRoot;
+    private DefaultTreeModel treeModel;
+    private HashMap<String, ModuleInfo> menuMap;
+    private HashMap<String, ModuleInfo> dupeMap;
 
-    private int prevDepthIn = -1;
-    private boolean init = false;
+    protected DefaultTreeModel customTreeModel;
+    protected ShadowMenu customMenu;
 
+    private int prevDepthIn;
+
+
+    public MenuArranger(){
+        // Constructor time!
+        treeRoot = new DefaultMutableTreeNode("Menu");
+        treeModel = new DefaultTreeModel(treeRoot);
+        customTreeModel = null;
+        customMenu = null;
+
+        menuMap = new HashMap<>();
+        dupeMap = new HashMap<>();
+
+        prevDepthIn = -1;
+    }
 
     ///////////////////////////////////////////////////////////////////////////////////
     // Reads through the shadow menu currently in use within the context.
@@ -141,7 +148,7 @@ public class MenuArranger extends ContextCommand implements Runnable {
                 logService.info("Duplicate item detected! Deferring to user input");
                 ModuleInfo[] options = {dupeMap.get(key), menuMap.get(key)};
                 MenuMatcher newDialog = new MenuMatcher(options, pathListString);
-                dialog = new JDialog(newDialog);
+                JDialog dialog = new JDialog(newDialog);
                 ModuleInfo selection =  newDialog.getSelection();
             }
             else if (menuMap.containsKey(key)){
@@ -161,49 +168,43 @@ public class MenuArranger extends ContextCommand implements Runnable {
         }
     }
 
+    private synchronized DefaultTreeModel getNewMenu(){
+
+        return customTreeModel;
+    }
+
     @Override
     public void run() {
-        // TO DO: Clean up this section. THe main constructor is kind of funky!
-        // Getting close though!
+        // Get menu context and build a treeModel from it.
+        final ShadowMenu orig = menuService.getMenu();
 
-
-        if (frame == null && !init) {
-            MenuViewer menuViewer = new MenuViewer();
-            frame = new JFrame("Menu Arranger");
-            frame.addWindowListener(new WindowAdapter(){
-                public void windowClosed(WindowEvent wC) {
-                    frame = null;
-                    makeNewMenu(customTreeModel);
-                }
-            });
-
-
-
-            // Get menu context and build a treeModel from it.
-            final ShadowMenu orig = menuService.getMenu();
+        MenuViewer menuViewer = new MenuViewer(treeModel);
+        Thread thread = threadService.newThread(() -> {
             parseMenu(orig, treeRoot);
             treeModel.setRoot(treeRoot);
-
-            customTreeModel = menuViewer.setupUI(treeModel);
-
-            // THIS SECTION WILL ALLOW ME TO ADJUST THE MENU
-            // Right now I'm just reusing the default menu.
-            if (customMenu != null) {
-                System.out.println("SETTING MENU!!!!");
-                new SwingJMenuBarCreator().createMenus(customMenu, swingMenuBar);
-                frame.setJMenuBar(swingMenuBar);
+            menuViewer.setupGUI();
+            try {
+                wait();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
             }
+        });
+        thread.start();
 
-            // UI SETUP AND APPEARANCE.
-            frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-            frame.setContentPane(menuViewer.rootPanel);
-            frame.pack();
-            frame.setVisible(true);
-            init = true;
+        customTreeModel = menuViewer.getModel();
+        if (customTreeModel != null){
+            notify();
+            System.out.println("Made it!");
         }
-        else {
-            logService.info("Made it to the else");
-            // I can't figure out how to only allow one window at a time.
-        }
+
+
+        System.out.println("after Gui");
+        //if (threadTree != null){
+        //    System.out.println("CustomTreeModel returned "+customTreeModel.getChildCount(customTreeModel.getRoot()));
+        //    makeNewMenu(customTreeModel);
+        //}
+
+
+
     }
 }
