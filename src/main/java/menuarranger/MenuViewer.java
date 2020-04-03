@@ -9,14 +9,12 @@ import javax.swing.tree.TreeSelectionModel;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 
 public class MenuViewer extends JDialog {
     protected JPanel rootPanel;
     protected JTree menuTree;
     protected JButton cancelButton;
-    protected JButton okButton;
+    protected JButton OKButton;
     protected JButton deleteButton;
     protected JPanel BottomPanel;
     protected JPanel adjustPanel;
@@ -24,10 +22,10 @@ public class MenuViewer extends JDialog {
     protected JScrollPane hiddenPane;
     protected JScrollPane visiblePane;
     protected JTree customTree;
+    protected JButton addFolderButton;
 
-    private DefaultMutableTreeNode newTreeRoot = new DefaultMutableTreeNode("Drop Here");
+    private DefaultMutableTreeNode newTreeRoot = new DefaultMutableTreeNode("Drop Here", true);
     private DefaultTreeModel newTreeModel = new DefaultTreeModel(newTreeRoot);
-
     public DefaultTreeModel finalTreeModel = null;
 
     public MenuViewer(DefaultTreeModel menuTreeModel) {
@@ -35,28 +33,47 @@ public class MenuViewer extends JDialog {
         setContentPane(rootPanel);
         setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
         menuTree.setModel(menuTreeModel);
-        menuTree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
+        menuTree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION); // I don't want to have to deal with moving multiple nodes, sorry!
         customTree.setModel(newTreeModel);
         customTree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
         customTree.setDragEnabled(true);
         customTree.setDropMode(DropMode.ON_OR_INSERT);
 
-        okButton.addActionListener(new ActionListener() {
+        // Setup button actions
+        OKButton.addActionListener(e -> onOK());
+        cancelButton.addActionListener(e -> onCancel());
+        deleteButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                onOK();
+                // NEED TO FIGURE OUT HOW TO MAKE THIS WORK SO IT DOESN'T DELETE THE BLANK NODE IF EMPTY!
+                // ALSO NEED TO MAKE IT SO I CAN'T DO ON THE ROOT NODE!
+                //DefaultMutableTreeNode temp = new DefaultMutableTreeNode(customTree.getLastSelectedPathComponent());
+                //if (newTreeModel.getChildCount(temp.getParent()) < 1 && customTree.getLastSelectedPathComponent().toString() != "") {
+                    newTreeModel.removeNodeFromParent((DefaultMutableTreeNode) customTree.getLastSelectedPathComponent());
+                //}
+                //else {
+                //    System.out.println("CAN'T DELETE THAT!");
+                //}
             }
         });
-        cancelButton.addActionListener(new ActionListener() {
+        addFolderButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                onCancel();
+                DefaultMutableTreeNode last = (DefaultMutableTreeNode) customTree.getLastSelectedPathComponent();
+                DefaultMutableTreeNode insertNode = new DefaultMutableTreeNode("New Folder", true);
+                // In order to get around my restriction in the canImport function below (can't drop on leaves)...
+                DefaultMutableTreeNode fakeNode = new DefaultMutableTreeNode("", false);
+                insertNode.add(fakeNode);
+                newTreeModel.insertNodeInto(insertNode, last, last.getChildCount());
             }
         });
+
+        // Code for setting up drag and drop from the menu tree to the custom tree
         customTree.setTransferHandler(new TransferHandler() {
 
             public boolean canImport(TransferSupport info) {
                 // Currently preventing drops based on two criteria:
                 // 1) If the path is null (anywhere in random space)
                 // 2) If it is on a leaf that is not the root (assuming it is a command)
+                // Exception to (2) is if it is a new folder... see below.
 
                 info.setShowDropLocation(true);
                 JTree.DropLocation dl = (JTree.DropLocation) info.getDropLocation();
@@ -65,6 +82,7 @@ public class MenuViewer extends JDialog {
                 if (path == null) {
                     return false;
                 } else {
+                    //DefaultMutableTreeNode drop = (DefaultMutableTreeNode) path.getLastPathComponent();
                     if (dropIndex == -1 && path.getLastPathComponent() != newTreeModel.getRoot()) {
                         DefaultMutableTreeNode node = (DefaultMutableTreeNode) path.getLastPathComponent();
                         return !node.isLeaf();
@@ -74,8 +92,6 @@ public class MenuViewer extends JDialog {
             }
 
             public boolean importData(TransferSupport info) {
-                // TO DO: Set it to do something if drop location is null!?
-
                 // if we can't handle the import, say so
                 if (!canImport(info)) {
                     return false;
@@ -83,7 +99,6 @@ public class MenuViewer extends JDialog {
 
                 JTree.DropLocation dl = (JTree.DropLocation) info.getDropLocation();
                 TreePath path = dl.getPath();
-                TreePath item = menuTree.getSelectionPath();
 
                 int childIndex = dl.getChildIndex();
 
@@ -96,13 +111,13 @@ public class MenuViewer extends JDialog {
                 // create a new node to represent the data and insert it into the model
                 DefaultMutableTreeNode newNode = (DefaultMutableTreeNode) menuTree.getLastSelectedPathComponent();
 
-                //if (newNode.isLeaf()) {
-                //    System.out.println("This is a leaf!");
-                //    //newNode.setAllowsChildren(false);
-                //}
-
                 DefaultMutableTreeNode parentNode = (DefaultMutableTreeNode) path.getLastPathComponent();
                 newTreeModel.insertNodeInto(newNode, parentNode, childIndex);
+                System.out.println(parentNode.getChildAt(0));
+                System.out.println(childIndex);
+                //THIS IS SUPER BUGGY!
+                //if (parentNode.getChildAt(0).isLeaf() && parentNode.getChildAt(0).toString() == "") {
+                //    parentNode.remove(0);}
 
                 // make the new node visible and scroll so that it's visible
                 customTree.makeVisible(path.pathByAddingChild(newNode));
@@ -111,18 +126,10 @@ public class MenuViewer extends JDialog {
                 return true;
             }
         });
-        pack();
-
-
     }
 
     public DefaultTreeModel getTreeModel() {
-        //setVisible(true);
-        if (finalTreeModel != null)
-            System.out.println("Returned value");
-        System.out.println("Sent!");
         return finalTreeModel;
-
     }
 
     public void close() {
@@ -131,7 +138,6 @@ public class MenuViewer extends JDialog {
     }
 
     public void onOK() {
-        System.out.println("OK pressed");
         setCustomTree();
         close();
     }
@@ -141,9 +147,7 @@ public class MenuViewer extends JDialog {
     }
 
     public void setCustomTree() {
-        System.out.println("Setting custom tree. Here is child count: ");
         finalTreeModel = newTreeModel;
-        System.out.println(finalTreeModel.getChildCount(finalTreeModel.getRoot()));
     }
 
     //////////////////////////////////////////////////////////
@@ -173,24 +177,24 @@ public class MenuViewer extends JDialog {
         rootPanel.setPreferredSize(new Dimension(600, 350));
         rootPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLoweredBevelBorder(), null));
         BottomPanel = new JPanel();
-        BottomPanel.setLayout(new com.intellij.uiDesigner.core.GridLayoutManager(2, 3, new Insets(0, 0, 0, 0), -1, -1));
+        BottomPanel.setLayout(new com.intellij.uiDesigner.core.GridLayoutManager(2, 5, new Insets(0, 0, 0, 0), -1, -1));
         rootPanel.add(BottomPanel, new com.intellij.uiDesigner.core.GridConstraints(1, 0, 1, 2, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_BOTH, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, null, null, null, 1, false));
         cancelButton = new JButton();
         cancelButton.setText("Cancel");
-        BottomPanel.add(cancelButton, new com.intellij.uiDesigner.core.GridConstraints(1, 2, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_EAST, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(100, -1), null, 0, false));
-        okButton = new JButton();
-        okButton.setText("OK");
-        BottomPanel.add(okButton, new com.intellij.uiDesigner.core.GridConstraints(1, 1, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(100, -1), null, 0, false));
-        final com.intellij.uiDesigner.core.Spacer spacer1 = new com.intellij.uiDesigner.core.Spacer();
-        BottomPanel.add(spacer1, new com.intellij.uiDesigner.core.GridConstraints(1, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, 1, null, null, null, 1, false));
+        BottomPanel.add(cancelButton, new com.intellij.uiDesigner.core.GridConstraints(1, 4, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_EAST, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(100, -1), null, 0, false));
         final JSeparator separator1 = new JSeparator();
-        BottomPanel.add(separator1, new com.intellij.uiDesigner.core.GridConstraints(0, 0, 1, 3, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_BOTH, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        BottomPanel.add(separator1, new com.intellij.uiDesigner.core.GridConstraints(0, 0, 1, 5, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_BOTH, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        OKButton = new JButton();
+        OKButton.setText("OK");
+        BottomPanel.add(OKButton, new com.intellij.uiDesigner.core.GridConstraints(1, 3, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_WEST, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(102, 30), null, 0, false));
+        final com.intellij.uiDesigner.core.Spacer spacer1 = new com.intellij.uiDesigner.core.Spacer();
+        BottomPanel.add(spacer1, new com.intellij.uiDesigner.core.GridConstraints(1, 2, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, 1, null, null, null, 0, false));
         adjustPanel = new JPanel();
-        adjustPanel.setLayout(new com.intellij.uiDesigner.core.GridLayoutManager(2, 2, new Insets(0, 0, 0, 0), -1, -1));
+        adjustPanel.setLayout(new com.intellij.uiDesigner.core.GridLayoutManager(2, 5, new Insets(0, 0, 0, 0), -1, -1));
         rootPanel.add(adjustPanel, new com.intellij.uiDesigner.core.GridConstraints(0, 1, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_BOTH, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
         adjustSplitPane = new JSplitPane();
         adjustSplitPane.setDividerLocation(200);
-        adjustPanel.add(adjustSplitPane, new com.intellij.uiDesigner.core.GridConstraints(0, 0, 1, 2, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_BOTH, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, null, new Dimension(250, 200), null, 1, false));
+        adjustPanel.add(adjustSplitPane, new com.intellij.uiDesigner.core.GridConstraints(0, 0, 1, 5, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_BOTH, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, null, new Dimension(250, 200), null, 1, false));
         visiblePane = new JScrollPane();
         visiblePane.setAutoscrolls(false);
         adjustSplitPane.setLeftComponent(visiblePane);
@@ -213,11 +217,16 @@ public class MenuViewer extends JDialog {
         hiddenPane.setViewportView(customTree);
         deleteButton = new JButton();
         deleteButton.setText("Remove Selected");
-        adjustPanel.add(deleteButton, new com.intellij.uiDesigner.core.GridConstraints(1, 1, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_EAST, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 4, false));
+        adjustPanel.add(deleteButton, new com.intellij.uiDesigner.core.GridConstraints(1, 4, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_EAST, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
+        addFolderButton = new JButton();
+        addFolderButton.setText("Add New Folder");
+        adjustPanel.add(addFolderButton, new com.intellij.uiDesigner.core.GridConstraints(1, 3, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_EAST, com.intellij.uiDesigner.core.GridConstraints.FILL_NONE, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 2, false));
         final com.intellij.uiDesigner.core.Spacer spacer2 = new com.intellij.uiDesigner.core.Spacer();
-        rootPanel.add(spacer2, new com.intellij.uiDesigner.core.GridConstraints(2, 1, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_VERTICAL, 1, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(-1, 10), null, 2, false));
+        adjustPanel.add(spacer2, new com.intellij.uiDesigner.core.GridConstraints(1, 2, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, 1, null, null, null, 0, false));
         final com.intellij.uiDesigner.core.Spacer spacer3 = new com.intellij.uiDesigner.core.Spacer();
-        rootPanel.add(spacer3, new com.intellij.uiDesigner.core.GridConstraints(1, 2, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, 1, null, new Dimension(0, -1), null, 1, false));
+        rootPanel.add(spacer3, new com.intellij.uiDesigner.core.GridConstraints(2, 1, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_VERTICAL, 1, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(-1, 10), null, 2, false));
+        final com.intellij.uiDesigner.core.Spacer spacer4 = new com.intellij.uiDesigner.core.Spacer();
+        rootPanel.add(spacer4, new com.intellij.uiDesigner.core.GridConstraints(1, 2, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, 1, null, new Dimension(0, -1), null, 1, false));
     }
 
     /**

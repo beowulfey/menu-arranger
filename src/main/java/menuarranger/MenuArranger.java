@@ -73,7 +73,7 @@ public class MenuArranger extends ContextCommand implements Runnable {
             if (depth > prevDepthIn) {
                 if (child.getChildren() == null) {
                     node = new DefaultMutableTreeNode(child.getMenuEntry());
-                    treeParent.setAllowsChildren(false);
+                    node.setAllowsChildren(false);
                     treeParent.add(node);
                 }
                 else if (child.getChildren() != null) {
@@ -177,7 +177,7 @@ public class MenuArranger extends ContextCommand implements Runnable {
         treeModel.setRoot(treeRoot);
         MenuViewer menuViewer = new MenuViewer(treeModel);
 
-        // Setup dialog window
+        // Set up dialog window
         JDialog selector = new JDialog(menuViewer);
         selector.setContentPane(menuViewer.rootPanel);
         selector.pack();
@@ -185,18 +185,11 @@ public class MenuArranger extends ContextCommand implements Runnable {
         selector.setVisible(true);
         customTreeModel = menuViewer.getTreeModel();
 
-        if (customTreeModel != null){
-            System.out.println("Made it!");
-        }
 
-
-        System.out.println("after Gui");
+        logService.info("UI closed");
         if (customTreeModel != null){
             System.out.println("CustomTreeModel returned "+customTreeModel.getChildCount(customTreeModel.getRoot()));
             makeNewMenu(customTreeModel);
         }
-
-
-
     }
 }
