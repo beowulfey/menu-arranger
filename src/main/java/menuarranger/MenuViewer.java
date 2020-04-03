@@ -31,6 +31,9 @@ public class MenuViewer extends JDialog {
     public DefaultTreeModel finalTreeModel = null;
 
     public MenuViewer(DefaultTreeModel menuTreeModel) {
+        setAlwaysOnTop(true);
+        setContentPane(rootPanel);
+        setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
         menuTree.setModel(menuTreeModel);
         menuTree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
         customTree.setModel(newTreeModel);
@@ -108,27 +111,23 @@ public class MenuViewer extends JDialog {
                 return true;
             }
         });
+        pack();
 
 
     }
 
-    public DefaultTreeModel setupGUI() {
-        isModal();
-        setContentPane(rootPanel);
-        pack();
-        setVisible(true);
-        //addWindowListener(new WindowAdapter() {
-        //    public void windowClosed(WindowEvent wC) {
-        //        if (finalTreeModel == null){
-        //
-        //        }
-        //    }
-        //});
+    public DefaultTreeModel getTreeModel() {
+        //setVisible(true);
+        if (finalTreeModel != null)
+            System.out.println("Returned value");
+        System.out.println("Sent!");
         return finalTreeModel;
+
     }
 
     public void close() {
         setVisible(false);
+        dispose();
     }
 
     public void onOK() {
@@ -145,11 +144,6 @@ public class MenuViewer extends JDialog {
         System.out.println("Setting custom tree. Here is child count: ");
         finalTreeModel = newTreeModel;
         System.out.println(finalTreeModel.getChildCount(finalTreeModel.getRoot()));
-    }
-
-    public DefaultTreeModel getModel() {
-        System.out.println("Returning tree");
-        return finalTreeModel;
     }
 
     //////////////////////////////////////////////////////////

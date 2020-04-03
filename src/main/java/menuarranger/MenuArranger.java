@@ -168,41 +168,33 @@ public class MenuArranger extends ContextCommand implements Runnable {
         }
     }
 
-    private synchronized DefaultTreeModel getNewMenu(){
-
-        return customTreeModel;
-    }
 
     @Override
     public void run() {
         // Get menu context and build a treeModel from it.
         final ShadowMenu orig = menuService.getMenu();
-
+        parseMenu(orig, treeRoot);
+        treeModel.setRoot(treeRoot);
         MenuViewer menuViewer = new MenuViewer(treeModel);
-        Thread thread = threadService.newThread(() -> {
-            parseMenu(orig, treeRoot);
-            treeModel.setRoot(treeRoot);
-            menuViewer.setupGUI();
-            try {
-                wait();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        });
-        thread.start();
 
-        customTreeModel = menuViewer.getModel();
+        // Setup dialog window
+        JDialog selector = new JDialog(menuViewer);
+        selector.setContentPane(menuViewer.rootPanel);
+        selector.pack();
+        selector.setModal(true);
+        selector.setVisible(true);
+        customTreeModel = menuViewer.getTreeModel();
+
         if (customTreeModel != null){
-            notify();
             System.out.println("Made it!");
         }
 
 
         System.out.println("after Gui");
-        //if (threadTree != null){
-        //    System.out.println("CustomTreeModel returned "+customTreeModel.getChildCount(customTreeModel.getRoot()));
-        //    makeNewMenu(customTreeModel);
-        //}
+        if (customTreeModel != null){
+            System.out.println("CustomTreeModel returned "+customTreeModel.getChildCount(customTreeModel.getRoot()));
+            makeNewMenu(customTreeModel);
+        }
 
 
 
