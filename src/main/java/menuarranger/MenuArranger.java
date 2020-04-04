@@ -72,12 +72,12 @@ public class MenuArranger extends ContextCommand implements Runnable {
         for (ShadowMenu child : root.getChildren()) {
             final double depth = child.getMenuDepth();
             if (depth > prevDepthIn) {
-                if (child.getChildren() == null) {
+                if (child.isLeaf()) {
                     node = new DefaultMutableTreeNode(child.getMenuEntry());
                     node.setAllowsChildren(false); // doesn't do shit.
                     treeParent.add(node);
                 }
-                else if (child.getChildren() != null) {
+                else if (!child.isLeaf()) {
                     node = new DefaultMutableTreeNode(child.getMenuEntry());
                     treeParent.add(node);
                     prevDepthIn += 1;
@@ -200,6 +200,7 @@ public class MenuArranger extends ContextCommand implements Runnable {
     @Override
     public void run() {
         // These must be reset each time it is run
+
         customTreeModel = null;
         customMenu = null;
         prevDepthIn = -1;
@@ -210,7 +211,8 @@ public class MenuArranger extends ContextCommand implements Runnable {
         final ShadowMenu orig = menuService.getMenu();
         parseMenu(orig, treeRoot);
         treeModel.setRoot(treeRoot);
-        MenuViewer menuViewer = new MenuViewer(treeModel);
+        System.out.println(orig);
+        MenuViewer menuViewer = new MenuViewer(treeRoot);
 
         // Set up dialog window
         JDialog selector = new JDialog(menuViewer);
@@ -228,7 +230,6 @@ public class MenuArranger extends ContextCommand implements Runnable {
             //    new SwingJMenuBarCreator().createMenus(customMenu, swingMenuBar);
             //    frame.setJMenuBar(swingMenuBar);
             //}
-            orig.remove(treeModel.getRoot());
             makeNewMenu(customTreeModel);
         }
     }
