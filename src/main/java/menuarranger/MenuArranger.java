@@ -3,8 +3,10 @@
 
 package menuarranger;
 
+import org.scijava.MenuPath;
 import org.scijava.command.Command;
 import org.scijava.command.ContextCommand;
+import org.scijava.event.EventService;
 import org.scijava.log.LogService;
 import org.scijava.menu.MenuService;
 import org.scijava.menu.ShadowMenu;
@@ -12,7 +14,8 @@ import org.scijava.module.ModuleInfo;
 import org.scijava.module.ModuleService;
 import org.scijava.plugin.Parameter;
 import org.scijava.plugin.Plugin;
-import org.scijava.thread.ThreadService;
+import org.scijava.plugin.PluginService;
+import org.scijava.ui.UIService;
 
 import javax.swing.*;
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -33,12 +36,18 @@ public class MenuArranger extends ContextCommand implements Runnable {
     @Parameter
     private LogService logService;
     @Parameter
-    ThreadService threadService;
+    PluginService pluginService;
     @Parameter
-    private CustomMenuService customMenuService;
+    UIService uiService;
+    @Parameter
+    EventService eventService;
+    //@Parameter
+    //private CustomMenuService customMenuService;
 
     private DefaultMutableTreeNode treeRoot;
     private DefaultTreeModel treeModel;
+    private List<ModuleInfo> modList;
+    private List<ModuleInfo> newModList;
     private HashMap<String, ModuleInfo> menuMap;
     private HashMap<String, ModuleInfo> dupeMap;
 
@@ -49,16 +58,8 @@ public class MenuArranger extends ContextCommand implements Runnable {
 
 
     public MenuArranger(){
-        // Constructor time!
         treeRoot = new DefaultMutableTreeNode("Menu");
         treeModel = new DefaultTreeModel(treeRoot);
-        customTreeModel = null;
-        customMenu = null;
-
-        menuMap = new HashMap<>();
-        dupeMap = new HashMap<>();
-
-        prevDepthIn = -1;
     }
 
     ///////////////////////////////////////////////////////////////////////////////////
@@ -73,7 +74,7 @@ public class MenuArranger extends ContextCommand implements Runnable {
             if (depth > prevDepthIn) {
                 if (child.getChildren() == null) {
                     node = new DefaultMutableTreeNode(child.getMenuEntry());
-                    node.setAllowsChildren(false);
+                    node.setAllowsChildren(false); // doesn't do shit.
                     treeParent.add(node);
                 }
                 else if (child.getChildren() != null) {
@@ -96,9 +97,11 @@ public class MenuArranger extends ContextCommand implements Runnable {
 
         // Start by building a Hashmap of all current menu modules.
         // This will allow me to associate the menu item with its original ModuleInfo metadata.
-        List<ModuleInfo> modList = moduleService.getModules();
+        modList = moduleService.getModules();
         for (ModuleInfo mod : modList) {
             if (!mod.getMenuPath().isEmpty() && mod.getLocation() != null) {    // had a weird issue with this plugin being installed twice, hack to avoid
+                logService.info("Item: "+mod);
+                logService.info("Root "+mod.getMenuRoot());
                 String key = mod.getMenuPath().getLeaf().toString();            // Take the leaf node of each path for a key
                 ModuleInfo oldValue = menuMap.put(key, mod);
                 if (oldValue != null && oldValue.getMenuPath() != mod.getMenuPath()) {
@@ -113,17 +116,10 @@ public class MenuArranger extends ContextCommand implements Runnable {
         // DEBUGGING
         //List<PluginInfo<?>> plugList = pluginService.getPlugins();
         //for (PluginInfo plug : plugList) {
-        //    if (plug.getTitle().contains("DefaultMenuService")){
+        //    if (plug.getTitle().contains("MenuService")){
         //        logService.info(plug.getTitle());
         //        logService.info(plug.getPriority());
         //    }
-        //}
-
-
-
-        // Populate the dupe key HashMap with all values
-        //for (String dupeKey : dupeMap.keySet()) {
-        //    dupeMapExtended.put(dupeKey, new ModuleInfo[]{menuMap.get(dupeKey),dupeMap.get(dupeKey)});
         //}
 
         // Now iterate through the tree
@@ -150,10 +146,17 @@ public class MenuArranger extends ContextCommand implements Runnable {
                 MenuMatcher newDialog = new MenuMatcher(options, pathListString);
                 JDialog dialog = new JDialog(newDialog);
                 ModuleInfo selection =  newDialog.getSelection();
+
             }
             else if (menuMap.containsKey(key)){
                 logService.debug("Found a match for "+key);
-                //logService.info(menuMap.get(key));
+                ModuleInfo entry = menuMap.get(key);
+                logService.info("Previous menu is: "+ entry.getMenuPath());
+                String cleanedPath = cleanPath(pathListString);
+                MenuPath newPath = new MenuPath(cleanedPath,",");
+                entry.setMenuPath(newPath);
+                logService.info("--->New menu is: "+ entry.getMenuPath());
+
             }
             else {
                 logService.warn("Derp! Unable to find a menu item for "+key);
@@ -168,9 +171,27 @@ public class MenuArranger extends ContextCommand implements Runnable {
         }
     }
 
+    // Why is everything in Java so complicated?
+    // Removing brackets from the string for Menu Path
+    private String cleanPath(List<String> list){
+        StringBuilder sb = new StringBuilder();
+        for (int i=0; i<list.size(); i++){
+            sb.append(list.get(i));
+            if (i<list.size()-1) sb.append(",");
+        }
+        return sb.toString();
+    }
+
 
     @Override
     public void run() {
+        // These must be reset each time it is run
+        customTreeModel = null;
+        customMenu = null;
+        prevDepthIn = -1;
+        menuMap = new HashMap<>();
+        dupeMap = new HashMap<>();
+
         // Get menu context and build a treeModel from it.
         final ShadowMenu orig = menuService.getMenu();
         parseMenu(orig, treeRoot);
@@ -186,10 +207,18 @@ public class MenuArranger extends ContextCommand implements Runnable {
         customTreeModel = menuViewer.getTreeModel();
 
 
-        logService.info("UI closed");
-        if (customTreeModel != null){
-            System.out.println("CustomTreeModel returned "+customTreeModel.getChildCount(customTreeModel.getRoot()));
+        if (customTreeModel != null) {
+            //menuService.getMenu().removeAll(moduleService.getModules());
+            //if (customMenu != null) {
+            //    System.out.println("SETTING MENU!!!!");
+            //    new SwingJMenuBarCreator().createMenus(customMenu, swingMenuBar);
+            //    frame.setJMenuBar(swingMenuBar);
+            //}
+            orig.remove(treeModel.getRoot());
             makeNewMenu(customTreeModel);
         }
     }
+
+
+
 }

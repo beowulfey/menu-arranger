@@ -3,9 +3,11 @@
   <component name="ChangeListManager">
     <list default="true" id="94ca62c7-75b6-4e58-a71c-5f2b9410407d" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/menuarranger/CustomMenuService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/menuarranger/CustomMenuService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/menuarranger/MenuArranger.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/menuarranger/MenuArranger.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/menuarranger/MenuViewer.form" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/menuarranger/MenuViewer.form" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/menuarranger/MenuViewer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/menuarranger/MenuViewer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/menuarranger-0.1.0-sources.jar" beforeDir="false" afterPath="$PROJECT_DIR$/target/menuarranger-0.1.0-sources.jar" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/menuarranger-0.1.0.jar" beforeDir="false" afterPath="$PROJECT_DIR$/target/menuarranger-0.1.0.jar" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -249,7 +251,14 @@
       <option name="project" value="LOCAL" />
       <updated>1585915311778</updated>
     </task>
-    <option name="localTasksCounter" value="21" />
+    <task id="LOCAL-00021" summary="Added &quot;New Folder&quot; button that can add a folder to the tree. Added &quot;Remove&quot; functionality. Full of bugs though.">
+      <created>1585950178973</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1585950178973</updated>
+    </task>
+    <option name="localTasksCounter" value="22" />
     <servers />
   </component>
   <component name="Vcs.Log.History.Properties">
@@ -282,7 +291,8 @@
     <MESSAGE value="Some comments." />
     <MESSAGE value="An attempt to make it better threaded that is failing hard." />
     <MESSAGE value="FINALLY. Figured out the threads and everything, Menu Selector is now modal and returns the selection properly after closing!" />
-    <option name="LAST_COMMIT_MESSAGE" value="FINALLY. Figured out the threads and everything, Menu Selector is now modal and returns the selection properly after closing!" />
+    <MESSAGE value="Added &quot;New Folder&quot; button that can add a folder to the tree. Added &quot;Remove&quot; functionality. Full of bugs though." />
+    <option name="LAST_COMMIT_MESSAGE" value="Added &quot;New Folder&quot; button that can add a folder to the tree. Added &quot;Remove&quot; functionality. Full of bugs though." />
   </component>
   <component name="WindowStateProjectService">
     <state x="555" y="215" width="800" height="684" key="#Project_Structure" timestamp="1585316754949">
@@ -301,10 +311,10 @@
       <screen x="0" y="27" width="1920" height="1053" />
     </state>
     <state x="567" y="253" width="775" height="607" key="#com.intellij.ide.fileTemplates.ui.ConfigureTemplatesDialog/0.27.1920.1053@0.27.1920.1053" timestamp="1584997054752" />
-    <state x="768" y="272" width="374" height="569" key="#com.intellij.ide.util.MemberChooser" timestamp="1585774984650">
+    <state x="768" y="272" width="374" height="569" key="#com.intellij.ide.util.MemberChooser" timestamp="1585953631682">
       <screen x="0" y="27" width="1920" height="1053" />
     </state>
-    <state x="768" y="272" width="374" height="569" key="#com.intellij.ide.util.MemberChooser/0.27.1920.1053@0.27.1920.1053" timestamp="1585774984650" />
+    <state x="768" y="272" width="374" height="569" key="#com.intellij.ide.util.MemberChooser/0.27.1920.1053@0.27.1920.1053" timestamp="1585953631682" />
     <state x="688" y="334" width="524" height="452" key="#com.intellij.ide.util.PackageChooserDialog" timestamp="1585236402650">
       <screen x="0" y="27" width="1920" height="1053" />
     </state>
@@ -321,6 +331,10 @@
       <screen x="0" y="27" width="1920" height="1053" />
     </state>
     <state x="504" y="27" width="1406" height="1053" key="#com.intellij.refactoring.rename.AutomaticRenamingDialog/0.27.1920.1053@0.27.1920.1053" timestamp="1585311905452" />
+    <state x="693" y="302" width="524" height="510" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1585955973090">
+      <screen x="0" y="27" width="1920" height="1053" />
+    </state>
+    <state x="693" y="302" width="524" height="510" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.27.1920.1053@0.27.1920.1053" timestamp="1585955973090" />
     <state x="550" y="133" width="810" height="847" key="#menu-test_[deploy]" timestamp="1584994776123">
       <screen x="0" y="27" width="1920" height="1053" />
     </state>
@@ -337,34 +351,34 @@
       <screen x="0" y="27" width="1920" height="1053" />
     </state>
     <state x="697" y="408" width="634" height="305" key="ANALYSIS_DLG_com.intellij.analysis.BaseAnalysisAction$1/0.27.1920.1053@0.27.1920.1053" timestamp="1585255603761" />
-    <state x="396" y="105" width="1084" height="876" key="CommitChangelistDialog2" timestamp="1585915311666">
+    <state x="396" y="105" width="1084" height="876" key="CommitChangelistDialog2" timestamp="1585950178889">
       <screen x="0" y="27" width="1920" height="1053" />
     </state>
-    <state x="396" y="105" width="1084" height="876" key="CommitChangelistDialog2/0.27.1920.1053@0.27.1920.1053" timestamp="1585915311666" />
-    <state x="100" y="127" width="1720" height="853" key="DiffContextDialog" timestamp="1585943989140">
+    <state x="396" y="105" width="1084" height="876" key="CommitChangelistDialog2/0.27.1920.1053@0.27.1920.1053" timestamp="1585950178889" />
+    <state x="100" y="127" width="1720" height="853" key="DiffContextDialog" timestamp="1585956638331">
       <screen x="0" y="27" width="1920" height="1053" />
     </state>
-    <state x="100" y="127" width="1720" height="853" key="DiffContextDialog/0.27.1920.1053@0.27.1920.1053" timestamp="1585943989140" />
+    <state x="100" y="127" width="1720" height="853" key="DiffContextDialog/0.27.1920.1053@0.27.1920.1053" timestamp="1585956638331" />
     <state x="743" y="311" width="884" height="512" key="FileChooserDialogImpl" timestamp="1585330281975">
       <screen x="0" y="27" width="1920" height="1053" />
     </state>
     <state x="743" y="311" width="884" height="512" key="FileChooserDialogImpl/0.27.1920.1053@0.27.1920.1053" timestamp="1585330281975" />
-    <state width="1874" height="185" key="GridCell.Tab.0.bottom" timestamp="1585950115093">
+    <state width="1874" height="185" key="GridCell.Tab.0.bottom" timestamp="1586002518915">
       <screen x="0" y="27" width="1920" height="1053" />
     </state>
-    <state width="1874" height="185" key="GridCell.Tab.0.bottom/0.27.1920.1053@0.27.1920.1053" timestamp="1585950115093" />
-    <state width="1874" height="185" key="GridCell.Tab.0.center" timestamp="1585950115093">
+    <state width="1874" height="185" key="GridCell.Tab.0.bottom/0.27.1920.1053@0.27.1920.1053" timestamp="1586002518915" />
+    <state width="1874" height="185" key="GridCell.Tab.0.center" timestamp="1586002518915">
       <screen x="0" y="27" width="1920" height="1053" />
     </state>
-    <state width="1874" height="185" key="GridCell.Tab.0.center/0.27.1920.1053@0.27.1920.1053" timestamp="1585950115093" />
-    <state width="1874" height="185" key="GridCell.Tab.0.left" timestamp="1585950115093">
+    <state width="1874" height="185" key="GridCell.Tab.0.center/0.27.1920.1053@0.27.1920.1053" timestamp="1586002518915" />
+    <state width="1874" height="185" key="GridCell.Tab.0.left" timestamp="1586002518915">
       <screen x="0" y="27" width="1920" height="1053" />
     </state>
-    <state width="1874" height="185" key="GridCell.Tab.0.left/0.27.1920.1053@0.27.1920.1053" timestamp="1585950115093" />
-    <state width="1874" height="185" key="GridCell.Tab.0.right" timestamp="1585950115093">
+    <state width="1874" height="185" key="GridCell.Tab.0.left/0.27.1920.1053@0.27.1920.1053" timestamp="1586002518915" />
+    <state width="1874" height="185" key="GridCell.Tab.0.right" timestamp="1586002518915">
       <screen x="0" y="27" width="1920" height="1053" />
     </state>
-    <state width="1874" height="185" key="GridCell.Tab.0.right/0.27.1920.1053@0.27.1920.1053" timestamp="1585950115093" />
+    <state width="1874" height="185" key="GridCell.Tab.0.right/0.27.1920.1053@0.27.1920.1053" timestamp="1586002518915" />
     <state x="623" y="271" width="664" height="571" key="GuiDesigner.FormSource.Dialog" timestamp="1585083149974">
       <screen x="0" y="27" width="1920" height="1053" />
     </state>
@@ -389,10 +403,10 @@
       <screen x="0" y="27" width="1920" height="1053" />
     </state>
     <state x="817" y="349" width="286" height="415" key="UIDesigner.ListEditorDialog/0.27.1920.1053@0.27.1920.1053" timestamp="1585692117328" />
-    <state x="555" y="277" width="800" height="559" key="Vcs.Push.Dialog.v2" timestamp="1585915313800">
+    <state x="555" y="277" width="800" height="559" key="Vcs.Push.Dialog.v2" timestamp="1585950180627">
       <screen x="0" y="27" width="1920" height="1053" />
     </state>
-    <state x="555" y="277" width="800" height="559" key="Vcs.Push.Dialog.v2/0.27.1920.1053@0.27.1920.1053" timestamp="1585915313800" />
+    <state x="555" y="277" width="800" height="559" key="Vcs.Push.Dialog.v2/0.27.1920.1053@0.27.1920.1053" timestamp="1585950180627" />
     <state x="624" y="196" width="662" height="722" key="com.intellij.openapi.editor.actions.MultiplePasteAction$ClipboardContentChooser" timestamp="1585694425771">
       <screen x="0" y="27" width="1920" height="1053" />
     </state>

@@ -1,4 +1,5 @@
 package menuarranger;
+
 /*
  * #%L
  * SciJava Common shared library for SciJava software.
@@ -47,15 +48,22 @@ import org.scijava.service.Service;
 
 import java.util.*;
 
-// DefaultMenuService has a priority of 0. Not sure what that means for me here yet.
-
+/**
+ * Default service for keeping track of the application's menu structure.
+ *
+ * @author Curtis Rueden
+ * @see ShadowMenu
+ */
 @Plugin(type = Service.class)
 public class CustomMenuService extends AbstractService implements MenuService
 {
+
     @Parameter
     private EventService eventService;
+
     @Parameter
     private ModuleService moduleService;
+
     /** Menu tree structures. There is one structure per menu root. */
     private HashMap<String, ShadowMenu> rootMenus;
 
@@ -67,25 +75,27 @@ public class CustomMenuService extends AbstractService implements MenuService
     }
 
     // -- Event handlers --
-    // TO DO: Add event for new MenuArranger Instance!
 
     @EventHandler
-    protected synchronized void onEvent(final ModulesAddedEvent event) {
-        if (rootMenus == null) return; // menus not yet initialized
+    protected void onEvent(final ModulesAddedEvent event) {
+        if (rootMenus == null) {
+            // add *all* known modules, which includes the ones given here
+            rootMenus();
+            return;
+        }
+        // data structure already exists; add *these* modules only
         addModules(event.getItems());
     }
 
     @EventHandler
-    protected synchronized void onEvent(final ModulesRemovedEvent event) {
-        if (rootMenus == null) return; // menus not yet initialized
+    protected void onEvent(final ModulesRemovedEvent event) {
         for (final ShadowMenu menu : rootMenus().values()) {
             menu.removeAll(event.getItems());
         }
     }
 
     @EventHandler
-    protected synchronized void onEvent(final ModulesUpdatedEvent event) {
-        if (rootMenus == null) return; // menus not yet initialized
+    protected void onEvent(final ModulesUpdatedEvent event) {
         for (final ShadowMenu menu : rootMenus().values()) {
             menu.updateAll(event.getItems());
         }
@@ -153,7 +163,9 @@ public class CustomMenuService extends AbstractService implements MenuService
      * </p>
      */
     private HashMap<String, ShadowMenu> rootMenus() {
-        if (rootMenus == null) initRootMenus();
+        if (rootMenus == null) {
+            initRootMenus();
+        }
         return rootMenus;
     }
 
@@ -168,4 +180,3 @@ public class CustomMenuService extends AbstractService implements MenuService
     }
 
 }
-

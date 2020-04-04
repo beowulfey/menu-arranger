@@ -48,7 +48,7 @@ public class MenuViewer extends JDialog {
                 // ALSO NEED TO MAKE IT SO I CAN'T DO ON THE ROOT NODE!
                 //DefaultMutableTreeNode temp = new DefaultMutableTreeNode(customTree.getLastSelectedPathComponent());
                 //if (newTreeModel.getChildCount(temp.getParent()) < 1 && customTree.getLastSelectedPathComponent().toString() != "") {
-                    newTreeModel.removeNodeFromParent((DefaultMutableTreeNode) customTree.getLastSelectedPathComponent());
+                newTreeModel.removeNodeFromParent((DefaultMutableTreeNode) customTree.getLastSelectedPathComponent());
                 //}
                 //else {
                 //    System.out.println("CAN'T DELETE THAT!");
