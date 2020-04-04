@@ -210,8 +210,9 @@ public class MenuViewer extends JDialog {
         customTree = new JTree();
         customTree.setDragEnabled(true);
         customTree.setDropMode(DropMode.ON_OR_INSERT);
-        customTree.setEditable(true);
-        customTree.setScrollsOnExpand(false);
+        customTree.setEditable(false);
+        customTree.setInvokesStopCellEditing(false);
+        customTree.setScrollsOnExpand(true);
         customTree.setToggleClickCount(2);
         customTree.setVerifyInputWhenFocusTarget(false);
         hiddenPane.setViewportView(customTree);

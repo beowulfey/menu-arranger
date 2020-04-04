@@ -142,10 +142,24 @@ public class MenuArranger extends ContextCommand implements Runnable {
 
             if (dupeMap.containsKey(key)){
                 logService.info("Duplicate item detected! Deferring to user input");
-                ModuleInfo[] options = {dupeMap.get(key), menuMap.get(key)};
-                MenuMatcher newDialog = new MenuMatcher(options, pathListString);
-                JDialog dialog = new JDialog(newDialog);
-                ModuleInfo selection =  newDialog.getSelection();
+                ModuleInfo[] options = {menuMap.get(key), dupeMap.get(key)};
+                MenuMatcher menuMatcher = new MenuMatcher(options, pathListString);
+
+                // Set up user selection dialog
+                JDialog dialog = new JDialog(menuMatcher);
+                dialog.setLocation(200, 200); // THIS IS SO HACKY!
+                dialog.setAlwaysOnTop(true);
+                dialog.setContentPane(menuMatcher.contentPane);
+                dialog.pack();
+                dialog.setModal(true);
+                dialog.setVisible(true);
+
+                ModuleInfo selection =  menuMatcher.getSelection();
+                logService.info("Previous menu is: "+ selection.getMenuPath());
+                String cleanedPath = cleanPath(pathListString);
+                MenuPath newPath = new MenuPath(cleanedPath,",");
+                selection.setMenuPath(newPath);
+                logService.info("--->New menu is: "+ selection.getMenuPath());
 
             }
             else if (menuMap.containsKey(key)){

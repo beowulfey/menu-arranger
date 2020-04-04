@@ -102,8 +102,9 @@
                     <properties>
                       <dragEnabled value="true"/>
                       <dropMode value="ON_OR_INSERT"/>
-                      <editable value="true"/>
-                      <scrollsOnExpand value="false"/>
+                      <editable value="false"/>
+                      <invokesStopCellEditing value="false"/>
+                      <scrollsOnExpand value="true"/>
                       <toggleClickCount value="2"/>
                       <verifyInputWhenFocusTarget value="false"/>
                     </properties>

@@ -17,12 +17,11 @@ public class MenuMatcher extends JDialog {
     protected ModuleInfo selection;
     private int selIndex;
     private ModuleInfo[] optionsSaved;
-    public boolean finished = false;
 
     public MenuMatcher(ModuleInfo[] options, List<String> newPath) {
         DefaultListModel<String> listModel = new DefaultListModel<>();
-        listModel.addElement(options[1].getMenuPath().toString());
         listModel.addElement(options[0].getMenuPath().toString());
+        listModel.addElement(options[1].getMenuPath().toString());
         dialogLabel.setText("Please select for entry at: " + String.join(">>", newPath.toString()));
         optionList.setModel(listModel);
         optionList.setSelectedIndex(0);
@@ -32,6 +31,7 @@ public class MenuMatcher extends JDialog {
         optionList.addListSelectionListener(new ListSelectionListener() {
             public void valueChanged(ListSelectionEvent e) {
                 selIndex = optionList.getSelectedIndex();
+                System.out.println("You selected " + selIndex + "-->" + options[selIndex]);
             }
         });
 
@@ -49,7 +49,7 @@ public class MenuMatcher extends JDialog {
             }
         });
 
-        // call onCancel() on ESCAPE
+        // call onOK() on ESCAPE
         contentPane.registerKeyboardAction(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 onOK();
@@ -57,18 +57,11 @@ public class MenuMatcher extends JDialog {
         }, KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0), JComponent.WHEN_ANCESTOR_OF_FOCUSED_COMPONENT);
 
         optionsSaved = options;
-        setLocation(200, 200); // THIS IS SO HACKY!
-        setAlwaysOnTop(true);
-        setContentPane(contentPane);
-        setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-        setModal(true);
-        pack();
-        setVisible(true);
     }
 
     private void onOK() {
         selection = optionsSaved[selIndex];
-        finished = true;
+        setVisible(false);
         dispose();
 
     }
@@ -77,9 +70,6 @@ public class MenuMatcher extends JDialog {
         return selection;
     }
 
-    public boolean madeChoice() {
-        return finished;
-    }
 
 
     {
