@@ -68,6 +68,7 @@ public class CustomMenuService extends AbstractService implements MenuService
 
     /** Menu tree structures. There is one structure per menu root. */
     private HashMap<String, ShadowMenu> rootMenus;
+    private HashMap<String, ShadowMenu> defaultMenu;
     private List<ArrayList<Object>> customMenuInfo;
 
     // -- MenuService methods --
@@ -75,6 +76,15 @@ public class CustomMenuService extends AbstractService implements MenuService
     @Override
     public ShadowMenu getMenu(final String menuRoot) {
         return rootMenus().get(menuRoot);
+    }
+
+    public ShadowMenu getDefaultMenu() {
+        try{
+            ShadowMenu[] menu = defaultMenu.values().toArray(new ShadowMenu[0]);
+            return menu[0];
+        } catch (NullPointerException err){
+            return null;
+        }
     }
 
     // -- Event handlers --
@@ -156,23 +166,18 @@ public class CustomMenuService extends AbstractService implements MenuService
 
     }
 
+    // Opens up a previous saved menu.
     private List<ArrayList<Object>> readSavedMenu(){
         try{
             FileInputStream f = new FileInputStream(new File("customMenuList.map"));
             ObjectInputStream o = new ObjectInputStream(f);
             customMenuInfo = (List<ArrayList<Object>>) o.readObject();
             System.out.println("Read in previous menu file");
-            System.out.println("After try, object is "+customMenuInfo);
             o.close();
             f.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException e) {
+        } catch (ClassNotFoundException | IOException e) {
             e.printStackTrace();
         }
-        System.out.println("After reading in menu, object is "+customMenuInfo);
         return customMenuInfo;
     }
 
@@ -182,20 +187,23 @@ public class CustomMenuService extends AbstractService implements MenuService
         System.out.println("Compiling modules");
         final List<ModuleInfo> allModules = moduleService.getModules();
         for (ModuleInfo mod : allModules){
-            modMap.put(mod.getLocation(),mod);
+            modMap.put(mod.getDelegateClassName(),mod);
         }
         System.out.println("Successfully compiled");
-        System.out.println(input);
 
         for (int i = 0; i<input.size();i++){
             ArrayList<Object> entry = input.get(i);
-            String location = (String) entry.get(0);
+            String className = (String) entry.get(0);
             MenuPath path = new MenuPath((String) entry.get(1),",");
             path.getLeaf().setWeight((int) entry.get(2));
-            if (modMap.containsKey(location)){
-                ModuleInfo mod = modMap.get(location);
+            if (modMap.containsKey(className)){
+                ModuleInfo mod = modMap.get(className);
                 mod.setMenuPath(path);
                 cusMods.add(mod);
+                System.out.println("Found entry for "+path);
+            }
+            else{
+                System.out.println("Wasn't able to find for "+path);
             }
         }
         System.out.println("Rebuilt new menu!");
@@ -217,6 +225,16 @@ public class CustomMenuService extends AbstractService implements MenuService
         return rootMenus;
     }
 
+    private void initDefaultMenu() {
+        final HashMap<String, ShadowMenu> map = new HashMap<>();
+        final List<ModuleInfo> allModules = moduleService.getModules();
+        addModules(allModules, map);
+        defaultMenu = map;
+        System.out.println("Default menu initialized");
+    }
+
+
+
     /** Initializes {@link #rootMenus}. */
     private synchronized void initRootMenus() {
         if (rootMenus != null) return;
@@ -224,6 +242,7 @@ public class CustomMenuService extends AbstractService implements MenuService
         final File customMenuList = new File("customMenuList.map");
 
         if (customMenuList.exists()){
+            initDefaultMenu();
             customMenuInfo = readSavedMenu();
             List<ModuleInfo> customModules = parseCustomMenu(customMenuInfo);
             addModules(customModules, map);

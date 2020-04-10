@@ -3,12 +3,12 @@
 
 package menuarranger;
 
+import org.scijava.MenuPath;
 import org.scijava.command.Command;
 import org.scijava.command.ContextCommand;
 import org.scijava.event.EventService;
 import org.scijava.io.IOService;
 import org.scijava.log.LogService;
-import org.scijava.menu.MenuService;
 import org.scijava.menu.ShadowMenu;
 import org.scijava.module.ModuleInfo;
 import org.scijava.module.ModuleService;
@@ -31,7 +31,7 @@ import java.util.List;
 public class MenuArranger extends ContextCommand implements Runnable {
 
     @Parameter
-    private MenuService menuService;
+    private CustomMenuService menuService;
     @Parameter
     private ModuleService moduleService;
     @Parameter
@@ -46,6 +46,7 @@ public class MenuArranger extends ContextCommand implements Runnable {
     private DefaultMutableTreeNode treeRoot;
     private DefaultTreeModel treeModel;
     private List<ModuleInfo> modList;
+    private List<ModuleInfo> debugList;
     private List<ArrayList<Object>> newModList;
     private HashMap<String, ModuleInfo> menuMap;
     private HashMap<String, ModuleInfo> dupeMap;
@@ -58,6 +59,7 @@ public class MenuArranger extends ContextCommand implements Runnable {
 
     // Basic constructor.
     public MenuArranger(){
+        debugList = new ArrayList<ModuleInfo>();
         newModList = new ArrayList<ArrayList<Object>>();
         treeRoot = new DefaultMutableTreeNode("Menu");
         treeModel = new DefaultTreeModel(treeRoot);
@@ -147,21 +149,34 @@ public class MenuArranger extends ContextCommand implements Runnable {
                     ModuleInfo selection = menuMatcher.getSelection();
                     String cleanedPath = cleanPath(pathListString);
                     ArrayList<Object> modInfo = new ArrayList();
-                    modInfo.add(selection.getLocation());
+                    logService.warn(selection.getDelegateClassName());
+                    modInfo.add(selection.getDelegateClassName());
                     modInfo.add(cleanedPath);
                     modInfo.add(pri);
-                    logService.info(modInfo);
                     newModList.add(modInfo);
+
+                    // DEBUGGING
+                    MenuPath newPath = new MenuPath(cleanedPath, ",");
+                    newPath.getLeaf().setWeight(pri);
+                    selection.setMenuPath(newPath);
+                    debugList.add(selection);
 
                 } else if (menuMap.containsKey(key)) {
                     ModuleInfo entry = menuMap.get(key);
                     String cleanedPath = cleanPath(pathListString);
                     ArrayList<Object> modInfo = new ArrayList();
-                    modInfo.add(entry.getLocation());
+                    logService.warn(entry.getDelegateClassName());
+                    modInfo.add(entry.getDelegateClassName());
                     modInfo.add(cleanedPath);
                     modInfo.add(pri);
-                    logService.info(modInfo);
+                    //logService.info(modInfo);
                     newModList.add(modInfo);
+
+                    // DEBUGGING
+                    MenuPath newPath = new MenuPath(cleanedPath, ",");
+                    newPath.getLeaf().setWeight(pri);
+                    entry.setMenuPath(newPath);
+                    debugList.add(entry);
 
                 } else {
                     logService.warn("Derp! Unable to find a menu item for " + key);
@@ -192,13 +207,12 @@ public class MenuArranger extends ContextCommand implements Runnable {
 
     public void writeObject(List<ArrayList<Object>> object){
         try{
-            logService.info(object);
+            //logService.info(object);
             FileOutputStream f = new FileOutputStream(new File("customMenuList.map"));
             ObjectOutputStream o = new ObjectOutputStream(f);
             o.writeObject(object);
             o.close();
             f.close();
-
         } catch (FileNotFoundException err) {
             logService.info("Oops!");
         } catch (IOException e) {
@@ -230,8 +244,13 @@ public class MenuArranger extends ContextCommand implements Runnable {
 
         // Get current context and build a TreeModel and list of current modules
         buildMenuIndex();
-        final ShadowMenu orig = menuService.getMenu();
-        parseMenu(orig, treeRoot);
+        if (menuService.getDefaultMenu() != null) {
+            final ShadowMenu orig = menuService.getDefaultMenu();
+            parseMenu(orig, treeRoot);
+        } else{
+            final ShadowMenu orig = menuService.getMenu();
+            parseMenu(orig, treeRoot);
+        }
         treeModel.setRoot(treeRoot);
         MenuViewer menuViewer = new MenuViewer(treeRoot);
 
@@ -245,7 +264,6 @@ public class MenuArranger extends ContextCommand implements Runnable {
 
         //debug();
 
-        // faux pas technique, real amateur hour over here
         if (newRoot != null) {
             //menuService.getMenu().removeAll(moduleService.getModules());
             // if (customMenu != null) {
@@ -254,8 +272,7 @@ public class MenuArranger extends ContextCommand implements Runnable {
             //    frame.setJMenuBar(swingMenuBar);
             //}
             traverseChildren(newRoot);
-
-
+            System.out.println(new ShadowMenu(getContext(), debugList));
             writeObject(newModList);
         }
     }

@@ -2,16 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="94ca62c7-75b6-4e58-a71c-5f2b9410407d" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/customMenuList.map" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/test.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/customMenuList.map" beforeDir="false" afterPath="$PROJECT_DIR$/customMenuList.map" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/menuarranger/CustomMenuService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/menuarranger/CustomMenuService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/menuarranger/MenuArranger.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/menuarranger/MenuArranger.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/menuarranger/MenuViewer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/menuarranger/MenuViewer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/META-INF/json/org.scijava.plugin.Plugin" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/META-INF/json/org.scijava.plugin.Plugin" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/intellij/uiDesigner/core/SupportCode$TextWithMnemonic.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/intellij/uiDesigner/core/SupportCode$TextWithMnemonic.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/com/intellij/uiDesigner/core/SupportCode.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/intellij/uiDesigner/core/SupportCode.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/menuarranger-0.1.0-sources.jar" beforeDir="false" afterPath="$PROJECT_DIR$/target/menuarranger-0.1.0-sources.jar" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/menuarranger-0.1.0.jar" beforeDir="false" afterPath="$PROJECT_DIR$/target/menuarranger-0.1.0.jar" afterDir="false" />
     </list>
@@ -402,22 +396,22 @@
       <screen x="0" y="27" width="1920" height="1053" />
     </state>
     <state x="743" y="311" width="884" height="512" key="FileChooserDialogImpl/0.27.1920.1053@0.27.1920.1053" timestamp="1585330281975" />
-    <state width="1874" height="264" key="GridCell.Tab.0.bottom" timestamp="1586538405708">
+    <state width="1874" height="264" key="GridCell.Tab.0.bottom" timestamp="1586553413548">
       <screen x="0" y="27" width="1920" height="1053" />
     </state>
-    <state width="1874" height="264" key="GridCell.Tab.0.bottom/0.27.1920.1053@0.27.1920.1053" timestamp="1586538405708" />
-    <state width="1874" height="264" key="GridCell.Tab.0.center" timestamp="1586538405707">
+    <state width="1874" height="264" key="GridCell.Tab.0.bottom/0.27.1920.1053@0.27.1920.1053" timestamp="1586553413548" />
+    <state width="1874" height="264" key="GridCell.Tab.0.center" timestamp="1586553413548">
       <screen x="0" y="27" width="1920" height="1053" />
     </state>
-    <state width="1874" height="264" key="GridCell.Tab.0.center/0.27.1920.1053@0.27.1920.1053" timestamp="1586538405707" />
-    <state width="1874" height="264" key="GridCell.Tab.0.left" timestamp="1586538405707">
+    <state width="1874" height="264" key="GridCell.Tab.0.center/0.27.1920.1053@0.27.1920.1053" timestamp="1586553413548" />
+    <state width="1874" height="264" key="GridCell.Tab.0.left" timestamp="1586553413547">
       <screen x="0" y="27" width="1920" height="1053" />
     </state>
-    <state width="1874" height="264" key="GridCell.Tab.0.left/0.27.1920.1053@0.27.1920.1053" timestamp="1586538405707" />
-    <state width="1874" height="264" key="GridCell.Tab.0.right" timestamp="1586538405707">
+    <state width="1874" height="264" key="GridCell.Tab.0.left/0.27.1920.1053@0.27.1920.1053" timestamp="1586553413547" />
+    <state width="1874" height="264" key="GridCell.Tab.0.right" timestamp="1586553413548">
       <screen x="0" y="27" width="1920" height="1053" />
     </state>
-    <state width="1874" height="264" key="GridCell.Tab.0.right/0.27.1920.1053@0.27.1920.1053" timestamp="1586538405707" />
+    <state width="1874" height="264" key="GridCell.Tab.0.right/0.27.1920.1053@0.27.1920.1053" timestamp="1586553413548" />
     <state x="623" y="271" width="664" height="571" key="GuiDesigner.FormSource.Dialog" timestamp="1585083149974">
       <screen x="0" y="27" width="1920" height="1053" />
     </state>
