@@ -93,7 +93,6 @@ public class MenuArranger extends ContextCommand implements Runnable {
         prevDepthIn -= 1;
     }
 
-
     ////////////////////////////////////////////////////////////////////////////////////
     // Start by building a HashMap of all current menu modules.
     // Builds a second map for if a command appears twice. This seemed most simple.
@@ -106,6 +105,7 @@ public class MenuArranger extends ContextCommand implements Runnable {
                 String key = mod.getMenuPath().getLeaf().toString();            // Take the leaf node of each path for a key
                 ModuleInfo oldValue = menuMap.put(key, mod);
                 if (oldValue != null && oldValue.getMenuPath() != mod.getMenuPath()) {
+
                     ModuleInfo olderValue = dupeMap.put(key, oldValue);
                     if (olderValue != null && olderValue.getMenuPath() != oldValue.getMenuPath()) {
                         logService.warn("Wow! There are three of this menu entry! You suck at naming plugins. The third one " +

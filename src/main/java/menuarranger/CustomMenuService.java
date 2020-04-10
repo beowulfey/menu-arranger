@@ -239,20 +239,21 @@ public class CustomMenuService extends AbstractService implements MenuService
     private synchronized void initRootMenus() {
         if (rootMenus != null) return;
         final HashMap<String, ShadowMenu> map = new HashMap<>();
+        System.out.println("Reading file from"+System.getProperty("user.dir"));
         final File customMenuList = new File("customMenuList.map");
-
         if (customMenuList.exists()){
+            System.out.println("Using custom menu!");
             initDefaultMenu();
             customMenuInfo = readSavedMenu();
             List<ModuleInfo> customModules = parseCustomMenu(customMenuInfo);
             addModules(customModules, map);
         }
         else{
+            System.out.println("Using auto-generated menu");
             final List<ModuleInfo> allModules = moduleService.getModules();
             addModules(allModules, map);
         }
         rootMenus = map;
-        System.out.println("Loaded all modules");
     }
 
 }
