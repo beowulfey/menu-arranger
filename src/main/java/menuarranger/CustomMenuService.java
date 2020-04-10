@@ -1,5 +1,3 @@
-package menuarranger;
-
 /*
  * #%L
  * SciJava Common shared library for SciJava software.
@@ -32,6 +30,9 @@ package menuarranger;
  * #L%
  */
 
+package menuarranger;
+
+import org.scijava.MenuPath;
 import org.scijava.event.EventHandler;
 import org.scijava.event.EventService;
 import org.scijava.menu.MenuService;
@@ -46,6 +47,7 @@ import org.scijava.plugin.Plugin;
 import org.scijava.service.AbstractService;
 import org.scijava.service.Service;
 
+import java.io.*;
 import java.util.*;
 
 /**
@@ -54,7 +56,7 @@ import java.util.*;
  * @author Curtis Rueden
  * @see ShadowMenu
  */
-@Plugin(type = Service.class)
+@Plugin(type = Service.class, priority = 10)
 public class CustomMenuService extends AbstractService implements MenuService
 {
 
@@ -66,6 +68,7 @@ public class CustomMenuService extends AbstractService implements MenuService
 
     /** Menu tree structures. There is one structure per menu root. */
     private HashMap<String, ShadowMenu> rootMenus;
+    private List<ArrayList<Object>> customMenuInfo;
 
     // -- MenuService methods --
 
@@ -77,26 +80,26 @@ public class CustomMenuService extends AbstractService implements MenuService
     // -- Event handlers --
 
     @EventHandler
-    protected void onEvent(final ModulesAddedEvent event) {
-        if (rootMenus == null) {
-            // add *all* known modules, which includes the ones given here
-            rootMenus();
-            return;
-        }
-        // data structure already exists; add *these* modules only
+    protected synchronized void onEvent(final ModulesAddedEvent event) {
+        if (rootMenus == null) return; // menus not yet initialized
+        System.out.println("onEvent Mods Added");
         addModules(event.getItems());
     }
 
     @EventHandler
-    protected void onEvent(final ModulesRemovedEvent event) {
+    protected synchronized void onEvent(final ModulesRemovedEvent event) {
+        if (rootMenus == null) return; // menus not yet initialized
+        System.out.println("onEvent Mods Removed");
         for (final ShadowMenu menu : rootMenus().values()) {
             menu.removeAll(event.getItems());
         }
     }
 
     @EventHandler
-    protected void onEvent(final ModulesUpdatedEvent event) {
+    protected synchronized void onEvent(final ModulesUpdatedEvent event) {
+        if (rootMenus == null) return; // menus not yet initialized
         for (final ShadowMenu menu : rootMenus().values()) {
+            System.out.println("onEvent Mods Updated");
             menu.updateAll(event.getItems());
         }
     }
@@ -153,6 +156,52 @@ public class CustomMenuService extends AbstractService implements MenuService
 
     }
 
+    private List<ArrayList<Object>> readSavedMenu(){
+        try{
+            FileInputStream f = new FileInputStream(new File("customMenuList.map"));
+            ObjectInputStream o = new ObjectInputStream(f);
+            customMenuInfo = (List<ArrayList<Object>>) o.readObject();
+            System.out.println("Read in previous menu file");
+            System.out.println("After try, object is "+customMenuInfo);
+            o.close();
+            f.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+        System.out.println("After reading in menu, object is "+customMenuInfo);
+        return customMenuInfo;
+    }
+
+    private List<ModuleInfo> parseCustomMenu(List<ArrayList<Object>> input){
+        List<ModuleInfo> cusMods = new ArrayList<>();
+        HashMap<String, ModuleInfo> modMap = new HashMap<>();
+        System.out.println("Compiling modules");
+        final List<ModuleInfo> allModules = moduleService.getModules();
+        for (ModuleInfo mod : allModules){
+            modMap.put(mod.getLocation(),mod);
+        }
+        System.out.println("Successfully compiled");
+        System.out.println(input);
+
+        for (int i = 0; i<input.size();i++){
+            ArrayList<Object> entry = input.get(i);
+            String location = (String) entry.get(0);
+            MenuPath path = new MenuPath((String) entry.get(1),",");
+            path.getLeaf().setWeight((int) entry.get(2));
+            if (modMap.containsKey(location)){
+                ModuleInfo mod = modMap.get(location);
+                mod.setMenuPath(path);
+                cusMods.add(mod);
+            }
+        }
+        System.out.println("Rebuilt new menu!");
+        return cusMods;
+    }
+
     /**
      * Lazily creates the {@link #rootMenus} data structure.
      * <p>
@@ -163,9 +212,8 @@ public class CustomMenuService extends AbstractService implements MenuService
      * </p>
      */
     private HashMap<String, ShadowMenu> rootMenus() {
-        if (rootMenus == null) {
-            initRootMenus();
-        }
+        if (rootMenus == null) initRootMenus();
+        System.out.println("INITIALIZING MENUS!!!!");
         return rootMenus;
     }
 
@@ -173,10 +221,19 @@ public class CustomMenuService extends AbstractService implements MenuService
     private synchronized void initRootMenus() {
         if (rootMenus != null) return;
         final HashMap<String, ShadowMenu> map = new HashMap<>();
+        final File customMenuList = new File("customMenuList.map");
 
-        final List<ModuleInfo> allModules = moduleService.getModules();
-        addModules(allModules, map);
+        if (customMenuList.exists()){
+            customMenuInfo = readSavedMenu();
+            List<ModuleInfo> customModules = parseCustomMenu(customMenuInfo);
+            addModules(customModules, map);
+        }
+        else{
+            final List<ModuleInfo> allModules = moduleService.getModules();
+            addModules(allModules, map);
+        }
         rootMenus = map;
+        System.out.println("Loaded all modules");
     }
 
 }

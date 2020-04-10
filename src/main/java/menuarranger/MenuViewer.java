@@ -1,5 +1,7 @@
 package menuarranger;
 
+import org.scijava.module.ModuleInfo;
+
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
 import javax.swing.tree.DefaultMutableTreeNode;
@@ -7,8 +9,6 @@ import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreePath;
 import javax.swing.tree.TreeSelectionModel;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
 
@@ -32,6 +32,7 @@ public class MenuViewer extends JDialog {
     private DefaultMutableTreeNode newRoot = new DefaultMutableTreeNode("Drop Here", true);
     private DefaultTreeModel newTreeModel = new DefaultTreeModel(newRoot);
     public DefaultTreeModel finalTreeModel = null;
+    public DefaultMutableTreeNode finalTreeModelRoot;
     private DefaultTreeModel menuTreeModel;
 
     public MenuViewer(DefaultMutableTreeNode menuRoot) {
@@ -40,15 +41,14 @@ public class MenuViewer extends JDialog {
         menuTreeModel = new DefaultTreeModel(rootCopy);
         menuTree.setModel(menuTreeModel);
         customTree.setModel(newTreeModel);
-        statusField.setForeground(new Color(250, 0, 0));
-        statusField.setText("");
+        statusField.setForeground(new Color(200, 50, 50));
 
         // I don't want to have to deal with moving multiple nodes, sorry!
         menuTree.getSelectionModel().setSelectionMode(TreeSelectionModel.SINGLE_TREE_SELECTION);
         customTree.getSelectionModel().setSelectionMode(TreeSelectionModel.DISCONTIGUOUS_TREE_SELECTION);
 
+        // Dialog button and field functionality
         OKButton.addActionListener(e -> onOK());
-
         nodeName.addFocusListener(new FocusListener() {
             @Override
             public void focusLost(FocusEvent e) {
@@ -66,43 +66,37 @@ public class MenuViewer extends JDialog {
                 }
             }
         });
-
         cancelButton.addActionListener(e -> onCancel());
-        deleteButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                // Can I get this to delete multiple nodes at once? Low priority.
-                try {
-                    newTreeModel.removeNodeFromParent((DefaultMutableTreeNode) customTree.getLastSelectedPathComponent());
-                } catch (IllegalArgumentException err) {
-                    statusField.setText("Can't delete the root node!");
-                } catch (NullPointerException err) {
-                    statusField.setText("Please select a site first!");
-                }
+        deleteButton.addActionListener(e -> {
+            // Can I get this to delete multiple nodes at once? Low priority.
+            try {
+                newTreeModel.removeNodeFromParent((DefaultMutableTreeNode) customTree.getLastSelectedPathComponent());
+            } catch (IllegalArgumentException err) {
+                statusField.setText("Can't delete the root node!");
+            } catch (NullPointerException err) {
+                statusField.setText("Please select a site first!");
             }
         });
-        addFolderButton.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                try {
-                    DefaultMutableTreeNode last = (DefaultMutableTreeNode) customTree.getLastSelectedPathComponent();
-                    TreePath path = customTree.getSelectionPath();
-                    DefaultMutableTreeNode insertNode = new DefaultMutableTreeNode(nodeName.getText(), true);
-                    newTreeModel.insertNodeInto(insertNode, last, last.getChildCount());
-                    customTree.makeVisible(path.pathByAddingChild(insertNode));
-                    customTree.scrollRectToVisible(customTree.getPathBounds(path.pathByAddingChild(insertNode)));
-                    nodeName.setText("New Folder Name");
+        addFolderButton.addActionListener(e -> {
+            try {
+                DefaultMutableTreeNode last = (DefaultMutableTreeNode) customTree.getLastSelectedPathComponent();
+                TreePath path = customTree.getSelectionPath();
+                DefaultMutableTreeNode insertNode = new DefaultMutableTreeNode(nodeName.getText(), true);
+                newTreeModel.insertNodeInto(insertNode, last, last.getChildCount());
+                customTree.makeVisible(path.pathByAddingChild(insertNode));
+                customTree.scrollRectToVisible(customTree.getPathBounds(path.pathByAddingChild(insertNode)));
+                nodeName.setText("New Folder Name");
 
-                } catch (NullPointerException err) {
-                    statusField.setForeground(new Color(250, 0, 0));
-                    statusField.setText("Please select a site first!");
+            } catch (NullPointerException err) {
+                statusField.setForeground(new Color(250, 0, 0));
+                statusField.setText("Please select a site first!");
 
 
-                }
             }
         });
 
         // Code for setting up drag and drop from the menu tree to the custom tree
         customTree.setTransferHandler(new TransferHandler() {
-
             public boolean canImport(TransferSupport info) {
                 // Currently preventing drops based on two criteria:
                 // 1) If the path is null (anywhere in random space)
@@ -154,15 +148,10 @@ public class MenuViewer extends JDialog {
         });
     }
 
-    public DefaultTreeModel getTreeModel() {
-        return finalTreeModel;
-    }
-
     // Makes a copy of the root, so that when I make changes (such as dragging over an item)
-    // it doesn't modify my original menu tree that is displayed (it stays static).
+    // it doesn't modify my original menu tree that is displayed.
     private DefaultMutableTreeNode copyRoot(final DefaultMutableTreeNode root) {
         DefaultMutableTreeNode copy = (DefaultMutableTreeNode) root.clone();
-        System.out.println("Current leaf: " + root);
         if (!root.isLeaf()) {
             for (int i = 0; i < root.getChildCount(); i++) {
                 DefaultMutableTreeNode child = copyRoot((DefaultMutableTreeNode) root.getChildAt(i));
@@ -178,19 +167,25 @@ public class MenuViewer extends JDialog {
         dispose();
     }
 
-    public void onOK() {
-        setCustomTree();
-        close();
-    }
-
     public void onCancel() {
         close();
     }
 
-    // Confirm your changes and return the file choice.
-    public void setCustomTree() {
-        finalTreeModel = newTreeModel;
+    public void onOK() {
+        finalizeChanges();
+        close();
     }
+
+    // Confirm your changes and set the final tree.
+    public void finalizeChanges() {
+        finalTreeModelRoot = (DefaultMutableTreeNode) newTreeModel.getRoot();
+    }
+
+    // Returns the root node for the custom tree.
+    public DefaultMutableTreeNode getCustomRoot() {
+        return finalTreeModelRoot;
+    }
+
 
     //////////////////////////////////////////////////////////
     // UI STUFF THAT I SHOULD NOT HAVE TO TOUCH
@@ -217,7 +212,7 @@ public class MenuViewer extends JDialog {
         rootPanel.setLayout(new com.intellij.uiDesigner.core.GridLayoutManager(3, 1, new Insets(10, 10, 10, 10), -1, -1));
         rootPanel.setAutoscrolls(false);
         rootPanel.setPreferredSize(new Dimension(600, 350));
-        rootPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLoweredBevelBorder(), null));
+        rootPanel.setBorder(BorderFactory.createTitledBorder(BorderFactory.createLoweredBevelBorder(), null, TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.DEFAULT_POSITION, null, null));
         bottomPanel = new JPanel();
         bottomPanel.setLayout(new com.intellij.uiDesigner.core.GridLayoutManager(1, 4, new Insets(0, 0, 0, 0), -1, -1));
         rootPanel.add(bottomPanel, new com.intellij.uiDesigner.core.GridConstraints(2, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
@@ -243,7 +238,7 @@ public class MenuViewer extends JDialog {
         adjustPanel.add(adjustSplitPane, new com.intellij.uiDesigner.core.GridConstraints(0, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_BOTH, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, null, new Dimension(250, 200), null, 0, false));
         hiddenPane = new JScrollPane();
         adjustSplitPane.setRightComponent(hiddenPane);
-        hiddenPane.setBorder(BorderFactory.createTitledBorder(null, "Custom Menu", TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.ABOVE_TOP));
+        hiddenPane.setBorder(BorderFactory.createTitledBorder(null, "Custom Menu", TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.ABOVE_TOP, null, null));
         customTree = new JTree();
         customTree.setDragEnabled(true);
         customTree.setDropMode(DropMode.ON_OR_INSERT);
@@ -259,7 +254,7 @@ public class MenuViewer extends JDialog {
         visiblePane = new JScrollPane();
         visiblePane.setAutoscrolls(false);
         panel1.add(visiblePane, new com.intellij.uiDesigner.core.GridConstraints(0, 0, 1, 1, com.intellij.uiDesigner.core.GridConstraints.ANCHOR_CENTER, com.intellij.uiDesigner.core.GridConstraints.FILL_HORIZONTAL, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_CAN_SHRINK | com.intellij.uiDesigner.core.GridConstraints.SIZEPOLICY_WANT_GROW, null, null, null, 0, false));
-        visiblePane.setBorder(BorderFactory.createTitledBorder(null, "System Menu", TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.ABOVE_TOP));
+        visiblePane.setBorder(BorderFactory.createTitledBorder(null, "System Menu", TitledBorder.DEFAULT_JUSTIFICATION, TitledBorder.ABOVE_TOP, null, null));
         menuTree = new JTree();
         menuTree.setDragEnabled(true);
         menuTree.setDropMode(DropMode.ON_OR_INSERT);
